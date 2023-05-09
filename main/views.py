@@ -10,7 +10,6 @@ import os
 def index(response):
 	return HttpResponse("Mercury Project")
 
-
 def landing(request):
     return render(request, 'home.html')
 
