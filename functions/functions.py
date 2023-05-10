@@ -147,7 +147,12 @@ def as_json(path:str, sh:str, header_row:int):
     headers = []
     first_col = header_col
 
+    map = {
+        'cols': [],
+    }
+
     while sheet[f'{header_col}{header_row}'].value:
+        map['cols'].append(header_col)
         headers.append(sheet[f'{header_col}{header_row}'].value)
         header_col = add_1(header_col)
     
@@ -157,7 +162,7 @@ def as_json(path:str, sh:str, header_row:int):
     while r <= 10:
         col = first_col
         h = 0
-        row = []
+        row = [header_row + r]
 
         while h < len(headers):
             row.append(str(sheet[f'{col}{header_row + r}'].value))
@@ -167,8 +172,7 @@ def as_json(path:str, sh:str, header_row:int):
         rows.append(row)
         r += 1
 
-
-    return json.dumps({'headers': headers, 'rows': rows})
+    return json.dumps({'headers': headers, 'rows': rows, 'map': map})
 
 
 if __name__ == '__main__':

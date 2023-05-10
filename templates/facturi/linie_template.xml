@@ -1,0 +1,16 @@
+<Linie>
+    <LinieNrCrt>$id</LinieNrCrt>
+    <Cont>$cont</Cont>
+    <Activitate></Activitate>
+    <Descriere>$denpr</Descriere>
+    <CodArticolFurnizor></CodArticolFurnizor>
+    <CodArticolClient></CodArticolClient>
+    <InformatiiSuplimentare></InformatiiSuplimentare>
+    <UM>$um</UM>
+    <Cantitate>$cant</Cantitate>
+    <Pret>$pret</Pret>
+    <Valoare>$val</Valoare>
+    <CotaTVA>$cota_tva</CotaTVA>
+    <TVA>$tva</TVA>
+    <PretVanzare>$pv</PretVanzare>
+</Linie>
