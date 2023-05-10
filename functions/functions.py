@@ -154,13 +154,13 @@ def as_json(path:str, sh:str, header_row:int):
     r = 1
     rows = []
 
-    while r <= 10 and str(sheet[f'{first_col}{header_row + r}'].value):
+    while r <= 10:
         col = first_col
         h = 0
         row = []
 
         while h < len(headers):
-            row.append(sheet[f'{col}{header_row + r}'].value)
+            row.append(str(sheet[f'{col}{header_row + r}'].value))
             h += 1
             col = add_1(col)
         

@@ -7,7 +7,7 @@
     <form method="POST">
         {%csrf_token%}
         {{form}}
-        <button type="submit">Configureaza</button>
+        <button type="submit" name="compile">Configureaza</button>
     </form>
 
     <center>
@@ -31,7 +31,6 @@
         r = '<th>' + header + '</th>\n'
 
         document.getElementById('header_row').innerHTML += r
-        console.log(header)
     }
 
     function draw_rows(row){
@@ -48,5 +47,6 @@
     xl['headers'].forEach(draw_header)
 
     xl['rows'].forEach(draw_rows)
+    console.log(xl)
 
 </script>
