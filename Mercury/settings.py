@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     
     #Third-party
     'main.apps.MainConfig',
+    'converter.apps.ConverterConfig'
 ]
 
 MIDDLEWARE = [

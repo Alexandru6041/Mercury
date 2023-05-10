@@ -7,11 +7,11 @@ import os
 
 # Create your views here.
 
-def index(response):
-	return HttpResponse("Mercury Project")
+def index(request):
+	return render(request, 'index.html')
 
-def landing(request):
-    return render(request, 'home.html')
+def signin(request):
+    return render(request, 'signin.html')
 
 def signUp(request):
     return render(request, 'signup.html')

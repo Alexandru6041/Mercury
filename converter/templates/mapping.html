@@ -1,0 +1,52 @@
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.min.js"></script>
+</head>
+
+<body>
+    <h2>Corespondenta intre coloane</h2>
+    <form method="POST">
+        {%csrf_token%}
+        {{form}}
+        <button type="submit">Configureaza</button>
+    </form>
+
+    <center>
+        <b>Preview</b>
+        <table id="preview">
+            <thead>
+                <tr id="header_row">
+    
+                </tr>
+            </thead>
+            <tbody id="body">
+    
+            </tbody>
+        </table>
+    </center>
+
+</body>
+
+<script>
+    function draw_header(header){
+        r = '<th>' + header + '</th>\n'
+
+        document.getElementById('header_row').innerHTML += r
+        console.log(header)
+    }
+
+    function draw_rows(row){
+        r = ''
+        row.forEach((cell) => {
+            r += '<td>' + cell + '</td>\n'
+        })
+
+        document.getElementById('body').innerHTML += '<tr>' + r + '</tr>\n'
+    }
+
+    xl = JSON.parse('{{json_file}}'.replace(/&quot;/g, '"'))
+
+    xl['headers'].forEach(draw_header)
+
+    xl['rows'].forEach(draw_rows)
+
+</script>
