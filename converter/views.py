@@ -125,4 +125,3 @@ def mapping(request, file):
 
     map = FormMap(1)
     return render(request, 'mapping.html', {'form': map, 'json_file': as_json(path, model.sheet, model.rand_header)})
-

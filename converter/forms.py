@@ -5,7 +5,7 @@ def validate_file(file):
     if file.name.split('.')[-1].lower() != 'xlsx':
         raise ValidationError('Fisierul incarcat nu are format .xlsx!')
     
-    elif file.size / 10**6 > 500:
+    elif file.size / 10**6 > 50:
         raise ValidationError('Fisierul incarcat este prea mare!')
 
 class FormIesiri(forms.Form):
@@ -30,7 +30,7 @@ class FormMap(forms.Form):
             ('cota_tva', 'cota tva'),
             'tva',
             ('cont', 'cont contabil'),
-            ('pv', 'pret vanzare'),
+            # ('pv', 'pret vanzare'),
             ('nume_cli', 'nume client'),
             ('cif_cli', 'cif client'),
             'data'

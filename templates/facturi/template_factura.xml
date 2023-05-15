@@ -1,0 +1,34 @@
+<Factura>
+    <Antet>
+        <FurnizorNume>$nume_furnizor</FurnizorNume>
+        <FurnizorCIF>$cif_furnizor</FurnizorCIF>
+        <FurnizorNrRegCom>$nrreg_furnizor</FurnizorNrRegCom>
+        <FurnizorCapital></FurnizorCapital>
+        <FurnizorTara></FurnizorTara>
+        <FurnizorJudet>$jud_furnizor</FurnizorJudet>
+        <FurnizorAdresa>$adresa_furnizor</FurnizorAdresa>
+        <FurnizorBanca></FurnizorBanca>
+        <FurnizorIBAN></FurnizorIBAN>
+        <FurnizorInformatiiSuplimentare></FurnizorInformatiiSuplimentare>
+        <ClientNume>$nume_cli</ClientNume>
+        <ClientInformatiiSuplimentare></ClientInformatiiSuplimentare>
+        <ClientCIF>$cif_cli</ClientCIF>
+        <ClientNrRegCom>$nrreg_cli</ClientNrRegCom>
+        <ClientJudet>$jud_cli</ClientJudet>
+        <ClientAdresa>$adr_cli</ClientAdresa>
+        <ClientBanca></ClientBanca>
+        <ClientIBAN></ClientIBAN>
+        <FacturaNumar>$nr_doc</FacturaNumar>
+        <FacturaData>$data_doc</FacturaData>
+        <FacturaScadenta></FacturaScadenta>
+        <FacturaTaxareInversa>$tax_inv</FacturaTaxareInversa>
+        <FacturaTVAIncasare>$tva_incasare</FacturaTVAIncasare>
+        <FacturaInformatiiSuplimentare></FacturaInformatiiSuplimentare>
+        <FacturaMoneda>RON</FacturaMoneda>
+    </Antet>
+    <Detalii>
+        <Continut>
+            $continut
+        </Continut>
+    </Detalii>
+</Factura>
