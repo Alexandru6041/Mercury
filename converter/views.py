@@ -37,7 +37,8 @@ def iesiri(request):
             
             if(len(valid) == 0):
                 return render(request, "403.html", status = 403)
-            
+        else:
+            return render(request, "403.html", status=403)
     except Exception as e:
             print(e)
             return render(request, "403.html", status = 403)
