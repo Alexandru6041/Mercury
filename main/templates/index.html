@@ -1,2 +1,53 @@
-<h1>Mercury Project</h1>
-<a href="xml/iesiri">Facturi iesiri</a>
+{% load static %}
+
+<!doctype html>
+
+<html lang = "en">
+    
+    <head>
+
+        <title>Mercury</title>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        
+        <link rel = "stylesheet" href = "{% static 'css/style.css' %}" >
+
+        
+    </head>
+
+    <body>
+        
+        {% csrf_token %}
+
+        {% if token %}
+
+
+            <h1>Hello {{ display_name }}</h1>
+            <a href="xml/iesiri?token={{ token }}">Facturi iesiri</a>
+            <a href="/" id="logout">Log Out</a>
+
+            {% comment %} <script>
+                function logOut()
+                {
+                    var user_token = false;
+                    "{{ token }}" = user_token;
+                }
+
+                document.getElementById("logout").addEventListener("click", function(logOut){
+                    logOut.preventDefault();
+                    logOut();
+                    console.log("LogOut Completed\n");
+                });
+            </script> {% endcomment %}
+
+        {% endif %}
+
+    </body>
+
+</html>
+
