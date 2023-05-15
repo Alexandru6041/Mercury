@@ -5,6 +5,7 @@ from .forms import FormIesiri, FormMap
 from functions.functions import *
 from .models import FileModel
 import datetime
+from Mercury import settings
 
 #Third-Party
 from utils.hash_utils.hash_utils import SecureHasher

@@ -1,4 +1,4 @@
-argon2-cffi==0.1.10
+argon2-cffi
 Django==4.2.1
 openpyxl==3.1.2
 pycryptodome==3.17
