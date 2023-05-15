@@ -10,3 +10,4 @@ class User(models.Model):
     
     display_name = models.CharField(max_length = 64)
     counter = models.IntegerField(editable = True)
+    user_token = models.CharField(max_length = 128, default="")

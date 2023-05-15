@@ -7,19 +7,21 @@
     <form method="POST">
         {%csrf_token%}
         {{form}}
-        <button type="submit">Configureaza</button>
+        <button type="submit" name="compile">Configureaza</button>
     </form>
 
     <center>
         <b>Preview</b>
         <table id="preview">
             <thead>
-                <tr id="header_row">
-    
+                <tr id="cols_italic" style="font-style: italic; color:gray">
+                    <th></th>
                 </tr>
             </thead>
             <tbody id="body">
-    
+                <tr id="header_row">
+                    <th></th>
+                </tr>
             </tbody>
         </table>
     </center>
@@ -31,10 +33,9 @@
         r = '<th>' + header + '</th>\n'
 
         document.getElementById('header_row').innerHTML += r
-        console.log(header)
     }
 
-    function draw_rows(row){
+    function draw_row(row){
         r = ''
         row.forEach((cell) => {
             r += '<td>' + cell + '</td>\n'
@@ -42,11 +43,21 @@
 
         document.getElementById('body').innerHTML += '<tr>' + r + '</tr>\n'
     }
+    function draw_map(map){
+        r = ''
+        map['cols'].forEach((col) => {
+            r += '<th>' + col + '</th>'
+        })
+
+        document.getElementById('cols_italic').innerHTML += r
+    }
 
     xl = JSON.parse('{{json_file}}'.replace(/&quot;/g, '"'))
+    draw_map(xl['map'])
 
     xl['headers'].forEach(draw_header)
 
-    xl['rows'].forEach(draw_rows)
+    xl['rows'].forEach(draw_row)
+
 
 </script>
