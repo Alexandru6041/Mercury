@@ -101,7 +101,7 @@ def mapping(request, file):
             return render(request, "403.html", status = 403)
 
     if request.method == 'POST':
-        map = FormMap(1, request.POST)
+        map = FormMap(1, request.POST) #TODO is_valid functions
 
         if map.is_valid():
             data = dict(map.cleaned_data)
@@ -119,7 +119,7 @@ def mapping(request, file):
                 'cif_fur': model.cif_firma
             })
             
-            gen_xml(path, model.sheet, (int(l1), int(l2)), data, output_path)
+            gen_xml(path, model.sheet, (int(l1), int(l2)), data, output_path) # TODO file download
 
         
         return render(request, 'mapping.html', {'form': map, 'json_file': as_json(path, model.sheet, model.rand_header)})
