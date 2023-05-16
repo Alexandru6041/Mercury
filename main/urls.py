@@ -12,7 +12,7 @@ urlpatterns = [
     path("sign-in/", views.signin, name = "sign-in"),
     path("sign-up/", views.signUp, name = "inregistrare"),
     path("forgot-password/", views.forgot_password, name = "parola_uitata"),
-    path("change_password", views.code_check, name = "schimbare_parola"),
+    path("change_password/", views.code_check, name = "schimbare_parola"),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)

@@ -50,14 +50,14 @@
 
                                 <div class="form-group">
                     
-                                    <input id="password-field" type="password" class="form-control" placeholder="Password" name = "password" required>
+                                    <input id="password-field" type="password" class="form-control" placeholder="Password" name = "password1" required>
                                     <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                     
                                 </div>
 
                                 <div class="form-group">
                     
-                                    <input id="confirm-password-field" type="password" class="form-control" placeholder="Confirm Password" name = "confirm_password" required>
+                                    <input id="confirm-password-field" type="password" class="form-control" placeholder="Confirm Password" name = "password2" required>
                     
                                 </div>
                                 
@@ -77,25 +77,10 @@
                             <a class = "inregistrare" href="/sign-in/"> <p class="w-100 text-center">&mdash; Am deja un cont! &mdash;</p> </a>
                             
                             {% if error_credentials %}
-
-                                <div class = "fade-in-text">
-                                    <p><strong>Eroare:</strong> {{ error_credentials }} </p>
-                                </div>
-
+                            <div class = "fade-in-text">
+                                <p class = "w-100 text-center"><strong>Eroare:</strong> {{ error_credentials }} </p>
+                            </div>
                             {% endif %}
-
-                            {% if ok %}
-                                <div class = "fade-in-text-ok justify-content-center">
-                                    <p class = "w-100 text-center"> {{ ok }} </p>
-                                </div>
-                            {% endif %}
-                            {% comment %} <div class="social d-flex text-center">
-                
-                                <a href="#" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span> Facebook</a>
-                                <a href="#" class="px-2 py-2 ml-md-1 rounded"><span class="ion-logo-twitter mr-2"></span> Twitter</a>
-
-                            </div> {% endcomment %}
-                
                         </div>
                 
                     </div>
