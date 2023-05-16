@@ -20,4 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('xml/', include("converter.urls")),
     path('', include("main.urls")),
+    # path('', include('django.contrib.auth.urls')),
 ]
