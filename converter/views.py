@@ -1,15 +1,18 @@
 from django import forms
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from .forms import FormIesiri, FormMap
 from functions.functions import *
 from .models import FileModel
+from django.core.exceptions import PermissionDenied
 import datetime
 
-
 def iesiri(request):
-    form = FormIesiri()
+    if not request.user.is_authenticated:
+        raise PermissionDenied
     
+    form = FormIesiri()
+
     if request.method == 'POST':
         # tip: [0, 1] -> 0 intrari, 1 iesiri
         form = FormIesiri(request.POST, request.FILES)
@@ -35,11 +38,14 @@ def iesiri(request):
 
 
 def mapping(request, file):
+    if not request.user.is_authenticated or request.user.id != int(file.split('_')[0]):
+        raise PermissionDenied
+    
     path = f'input files/{file}.xlsx'
     model = FileModel.objects.get(nume=f'{file}.xlsx')
-    
+
     if request.method == 'POST':
-        map = FormMap(1, request.POST)
+        map = FormMap(1, request.POST) #TODO is_valid functions
 
         if map.is_valid():
             data = dict(map.cleaned_data)
@@ -57,7 +63,7 @@ def mapping(request, file):
                 'cif_fur': model.cif_firma
             })
             
-            gen_xml(path, model.sheet, (int(l1), int(l2)), data, output_path)
+            gen_xml(path, model.sheet, (int(l1), int(l2)), data, output_path) # TODO file download
 
         
         return render(request, 'mapping.html', {'form': map, 'json_file': as_json(path, model.sheet, model.rand_header)})
