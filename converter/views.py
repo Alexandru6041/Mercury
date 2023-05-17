@@ -1,49 +1,17 @@
 from django import forms
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from .forms import FormIesiri, FormMap
 from functions.functions import *
 from .models import FileModel
+from django.core.exceptions import PermissionDenied
 import datetime
-from Mercury import settings
-
-#Third-Party
-from utils.hash_utils.hash_utils import SecureHasher
-import sqlite3
-
-#Variables
-DATABASE_PATH = settings.DATABASES['default']['NAME']
 
 def iesiri(request):
-    form = FormIesiri()
-
-    url = request.build_absolute_uri()
+    if not request.user.is_authenticated:
+        raise PermissionDenied
     
-    try:
-        if("?token=" in url):
-            sqliteConnection = sqlite3.connect(DATABASE_PATH)
-            cursor = sqliteConnection.cursor()
-            
-            url_token = request.GET.get("token")
-            token = url_token
-            
-            if ("=" in token):
-                return render(request, "403.html", status=403)
-            
-            chiper = SecureHasher.AESCipher()
-            dec_token = chiper.decrypt(url_token)
-            token = dec_token
-            
-            valid = cursor.execute("SELECT * FROM main_user WHERE display_name = ?", [token])
-            sqliteConnection.commit()
-            valid = cursor.fetchall()
-            
-            if(len(valid) == 0):
-                return render(request, "403.html", status = 403)
-            
-    except Exception as e:
-            print(e)
-            return render(request, "403.html", status = 403)
+    form = FormIesiri()
 
     if request.method == 'POST':
         # tip: [0, 1] -> 0 intrari, 1 iesiri
@@ -69,36 +37,11 @@ def iesiri(request):
     return render(request, 'iesiri.html', {'form': form})
 
 def mapping(request, file):
+    if not request.user.is_authenticated or request.user.id != int(file.split('_')[0]):
+        raise PermissionDenied
+    
     path = f'input files/{file}.xlsx'
     model = FileModel.objects.get(nume=f'{file}.xlsx')
-
-    url = request.build_absolute_uri()
-    
-    try:
-        if("?token=" in url):
-            sqliteConnection = sqlite3.connect(DATABASE_PATH)
-            cursor = sqliteConnection.cursor()
-            
-            url_token = request.GET.get("token")
-            token = url_token
-            
-            if ("=" in token):
-                return render(request, "403.html", status=403)
-            
-            chiper = SecureHasher.AESCipher()
-            dec_token = chiper.decrypt(url_token)
-            token = dec_token
-            
-            valid = cursor.execute("SELECT * FROM main_user WHERE display_name = ?", [token])
-            sqliteConnection.commit()
-            valid = cursor.fetchall()
-            
-            if(len(valid) == 0):
-                return render(request, "403.html", status = 403)
-            
-    except Exception as e:
-            print(e)
-            return render(request, "403.html", status = 403)
 
     if request.method == 'POST':
         map = FormMap(1, request.POST) #TODO is_valid functions
