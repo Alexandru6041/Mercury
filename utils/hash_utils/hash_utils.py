@@ -64,12 +64,11 @@ class SecureHasher(object):
     
     
     class AESCipher:
-        def __init__(self):
-            self.key = pad(b'%\xe9\xd0\xf4\xbe\xbb: \xfcX\xceHq %\xa1nD\x9d\x0e\xd9\xb9\xec\x1bO_', AES.block_size)
+        key = pad(b'%\xe9\xd0\xf4\xbe\xbb: \xfcX\xceHq %\xa1nD\x9d\x0e\xd9\xb9\xec\x1bO_', AES.block_size)
 
-        def encrypt(self, plaintext):
+        def encrypt(plaintext):
             iv = os.urandom(16)
-            cipher = AES.new(self.key, AES.MODE_CBC, iv)
+            cipher = AES.new(SecureHasher.AESCipher.key, AES.MODE_CBC, iv)
             
             ciphertext = cipher.encrypt(pad(plaintext.encode('utf-8'), AES.block_size))
             
@@ -78,13 +77,13 @@ class SecureHasher(object):
             
             return iv + ':' + ciphertext
 
-        def decrypt(self, ciphertext):
+        def decrypt(ciphertext):
             iv, ciphertext = ciphertext.split(':')
             iv = base64.urlsafe_b64decode(iv + '==')
             
             ciphertext = base64.urlsafe_b64decode(ciphertext + '==')
             
-            cipher = AES.new(self.key, AES.MODE_CBC, iv)
+            cipher = AES.new(SecureHasher.AESCipher.key, AES.MODE_CBC, iv)
             plaintext = unpad(cipher.decrypt(ciphertext), AES.block_size)
             
             return plaintext.decode('utf-8')

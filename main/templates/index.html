@@ -24,29 +24,9 @@
         
         {% csrf_token %}
 
-        {% if token %}
-
-
             <h1>Hello {{ display_name }}</h1>
-            <a href="xml/iesiri?token={{ token }}">Facturi iesiri</a>
-            <a href="/" id="logout">Log Out</a>
-
-            {% comment %} <script>
-                function logOut()
-                {
-                    var user_token = false;
-                    "{{ token }}" = user_token;
-                }
-
-                document.getElementById("logout").addEventListener("click", function(logOut){
-                    logOut.preventDefault();
-                    logOut();
-                    console.log("LogOut Completed\n");
-                });
-            </script> {% endcomment %}
-
-        {% endif %}
-
+            <a href="{% url 'iesiri' %}">Facturi iesiri</a>
+            <a href="{% url 'logout' %}" id="logout">Log Out</a>
     </body>
 
 </html>
