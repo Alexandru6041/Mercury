@@ -1,5 +1,7 @@
 import datetime
 import json
+from pathlib import Path
+from django import forms
 import openpyxl
 from string import Template
 from functions._math import add_1
@@ -9,7 +11,8 @@ class MappedColumn():
         self.col = col
 
 
-def reformat(data:str):
+def reformat(data:datetime.datetime):
+    return data.strftime('%d.%m.%Y')
     an = data[:4]
     luna = data[5:7]
     ziua = data[8:10]
@@ -112,7 +115,7 @@ def gen_xml(wb:str, sh:str, RANGE:tuple, mapping:dict, output_path:str) -> None:
             'jud_cli': "",
             'adr_cli': "",
             'nr_doc': nrdoc,
-            'data_doc': reformat(str(sheet[f'{mapping["data"].col}{line}'].value)),
+            'data_doc': reformat(sheet[f'{mapping["data"].col}{line}'].value),
             'tax_inv': '',
             'tva_incasare': '',
             'continut': facturi[nrdoc]['final']
@@ -174,6 +177,24 @@ def as_json(path:str, sh:str, header_row:int):
 
     return json.dumps({'headers': headers, 'rows': rows, 'map': map}).replace('\\n', ' ')
 
+def get_output_path(id, cif_firma):
+    name = f'F_RO{cif_firma}_multiple_{datetime.datetime.today().strftime("%d.%m.%Y")}.xml'
+    output_dir = f'output files/{id}'
+    output_path = f'{output_dir}/{name}'
+
+    if not Path(output_dir).exists():
+        Path(output_dir).mkdir()
+    
+    return output_path
+
+def proccess(map:forms.Form, model, user_id):
+    path = f'input files/{model.nume}'
+    data, l1, l2 = map.proccess(model.nume_firma, model.cif_firma) 
+    output_path = get_output_path(user_id, model.cif_firma)
+    
+    gen_xml(path, model.sheet, (l1, l2+1), data, output_path)
+
+    return output_path
 
 if __name__ == '__main__':
-    print(as_json('input files/xlsx.xlsx', 'Sheet1', 3))
+    print(reformat(datetime.datetime.today()))
