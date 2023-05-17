@@ -2,20 +2,29 @@ from __future__ import print_function
 import sib_api_v3_sdk
 from random import randint
 from sib_api_v3_sdk.rest import ApiException
+from jinja2 import Template
 
 
 class gService(object):
     
-    def send_mail(name_from, email_from, email_to, name_to, Subject, Context):
+    def __read_html_file(path):
+        with open(path, "r") as file:
+            content = Template(file.read())
+        
+        return content
+    
+    def send_mail(name_from, email_from, email_to, name_to, Subject, path_to_html, pin):
         configuration = sib_api_v3_sdk.Configuration()
-        configuration.api_key['api-key'] = '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'
+        configuration.api_key['api-key'] = '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'
 
         api_instance = sib_api_v3_sdk.TransactionalEmailsApi(
             sib_api_v3_sdk.ApiClient(configuration))
         subject = Subject
         sender = {"name": "{}".format(
             name_from), "email": "{}".format(email_from)}
-        html_content = Context
+        
+        html_content = gService.__read_html_file(path_to_html).render(name_from = name_from, name_to = name_to, pin = pin)
+        
         to = [{"email": "{}".format(email_to), "name": "{}".format(name_to)}]
 
         # params = {"parameter": "My param value", "subject": "New Subject"}

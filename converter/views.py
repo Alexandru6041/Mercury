@@ -36,6 +36,7 @@ def iesiri(request):
         
     return render(request, 'iesiri.html', {'form': form})
 
+
 def mapping(request, file):
     if not request.user.is_authenticated or request.user.id != int(file.split('_')[0]):
         raise PermissionDenied
