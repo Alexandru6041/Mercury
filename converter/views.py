@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 import datetime
 
 
-@login_required(login_url="/sign-in/", redirect_field_name="")
+# @login_required(login_url="/sign-in/", redirect_field_name="")
 def iesiri(request):
     form = FormIesiri()
     
@@ -39,7 +39,7 @@ def iesiri(request):
     return render(request, 'iesiri.html', {'form': form})
 
 
-@login_required(login_url="/sign-in/", redirect_field_name="")
+# @login_required(login_url="/sign-in/", redirect_field_name="")
 def mapping(request, file):
     path = f'input files/{file}.xlsx'
     model = FileModel.objects.get(nume=f'{file}.xlsx')
