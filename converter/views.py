@@ -4,16 +4,11 @@ from django.shortcuts import render
 from .forms import FormIesiri, FormMap
 from functions.functions import *
 from .models import FileModel
-from django.contrib.auth.decorators import login_required
 import datetime
 
 
-# @login_required(login_url="/sign-in/", redirect_field_name="")
 def iesiri(request):
     form = FormIesiri()
-    
-    if(not request.user.is_authenticated):
-        return render(request, "403.html", status = 403)
     
     if request.method == 'POST':
         # tip: [0, 1] -> 0 intrari, 1 iesiri
@@ -39,14 +34,10 @@ def iesiri(request):
     return render(request, 'iesiri.html', {'form': form})
 
 
-# @login_required(login_url="/sign-in/", redirect_field_name="")
 def mapping(request, file):
     path = f'input files/{file}.xlsx'
     model = FileModel.objects.get(nume=f'{file}.xlsx')
     
-    if(not request.user.is_authenticated):
-        return render(request, "403.html", status = 403)
-
     if request.method == 'POST':
         map = FormMap(1, request.POST)
 
