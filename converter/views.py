@@ -6,6 +6,7 @@ from functions.functions import *
 from .models import FileModel
 from django.core.exceptions import PermissionDenied
 import datetime
+from pathlib import Path
 
 def iesiri(request):
     if not request.user.is_authenticated:
@@ -18,7 +19,7 @@ def iesiri(request):
         form = FormIesiri(request.POST, request.FILES)
 
         if form.is_valid():
-            path = save_uploaded_xlsx(request.FILES['file'], 0)
+            path = save_uploaded_xlsx(request.FILES['file'], request.user.id)
 
             model = FileModel.objects.create(
                 nume=path.split('/')[-1],
@@ -50,7 +51,9 @@ def mapping(request, file):
         if map.is_valid():
             data = dict(map.cleaned_data)
             l1, l2 = str(data['interval']).split('-')
-            output_path = f'output files/F_RO{model.cif_firma}_multiple_{datetime.datetime.today().strftime("%d.%m.%Y")}.xml'
+            name = f'F_RO{model.cif_firma}_multiple_{datetime.datetime.today().strftime("%d.%m.%Y")}.xml'
+            output_dir = f'output files/{request.user.id}'
+            output_path = f'{output_dir}/{name}'
 
             for key in data:
                 if data[key][0] == '&':
@@ -63,10 +66,32 @@ def mapping(request, file):
                 'cif_fur': model.cif_firma
             })
             
-            gen_xml(path, model.sheet, (int(l1), int(l2)), data, output_path) # TODO file download
+            if not Path(output_dir).exists():
+                Path(output_dir).mkdir()
 
+            
+            gen_xml(path, model.sheet, (int(l1), int(l2)), data, output_path) # TODO file download
+            return HttpResponseRedirect(f'/files/{name}')
         
         return render(request, 'mapping.html', {'form': map, 'json_file': as_json(path, model.sheet, model.rand_header)})
 
     map = FormMap(1)
     return render(request, 'mapping.html', {'form': map, 'json_file': as_json(path, model.sheet, model.rand_header)})
+
+def download_file(request, file):
+    if not request.user.is_authenticated:
+        raise PermissionDenied
+
+    output_dir = f'output files/{request.user.id}'
+    output_path = f'{output_dir}/{file}'
+
+    if not Path(output_path).exists():
+        raise Http404
+
+    with open(output_path, 'rb') as f:
+        data = f.read()
+    
+    response = HttpResponse(data, content_type='aplication/download-me-please')
+    response['Content-Disposition'] = f'inline; filename={file}'
+    
+    return response
