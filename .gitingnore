@@ -1,1 +1,4 @@
 *.xlsx
+*.log
+*.pot
+__pycache__/
