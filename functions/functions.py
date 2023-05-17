@@ -172,7 +172,7 @@ def as_json(path:str, sh:str, header_row:int):
         rows.append(row)
         r += 1
 
-    return json.dumps({'headers': headers, 'rows': rows, 'map': map})
+    return json.dumps({'headers': headers, 'rows': rows, 'map': map}).replace('\\n', ' ')
 
 
 if __name__ == '__main__':
