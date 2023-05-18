@@ -1,9 +1,13 @@
+import binascii
+from tkinter import E
+from types import NoneType
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout, get_user_model
 from main.forms import RegisterUser
 from main.forms import ChangePassword
 from django.contrib.auth.decorators import login_required
 from django.core.validators import validate_email
+from sib_api_v3_sdk.rest import ApiException
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 # from django.contrib.auth.backends import
@@ -104,20 +108,33 @@ def forgot_password(request):
             try:
                 user = User.objects.get(username = username)
                 user_email = user.email
-                gService.send_mail("Mercury", "requests.mercury@gmail.com", user_email, username, "Resetare Parola", "main/templates/email_template.html", pin)
+                try:
+                    gService.send_mail("Mercury", "requests.mercury@gmail.com", user_email, username, "Resetare Parola", "main/templates/email_template.html", pin, request=request)
+                
+                except ApiException:
+                    return render(request, "502.html", status = 502)
                 return redirect("/change_password?code={}&username={}".format(enc_pin, enc_username))
-
             
             except User.DoesNotExist:
                 error = "Nu exista niciun utilizator cu acest nume"
                 
         elif(error == None):
             user_email = username
-            user = User.objects.get(email = user_email)
-            username = user.username
-            gService.send_mail("Mercury", "requests.mercury@gmail.com", user_email,
-                               username, "Resetare Parola", "main/templates/email_template.html", pin)
-            return redirect("/change_password?code={}&username={}".format(enc_pin, enc_username))
+            try:
+                user = User.objects.get(email = user_email)
+            
+                username = user.username
+                if(error == None):
+                    try:
+                        gService.send_mail("Mercury", "requests.mercury@gmail.com", user_email,
+                                    username, "Resetare Parola", "main/templates/email_template.html", pin, request=request)
+                    except ApiException:
+                        return render(request, "502.html", status = 502)
+
+                    return redirect("/change_password?code={}&username={}".format(enc_pin, enc_username))
+            
+            except User.DoesNotExist:
+                error = "Nu exista niciun utilizator cu aceasta adresa de email"
 
     return render(request, "forgot_password.html", {'error' : error})
 
@@ -131,16 +148,21 @@ def code_check(request):
         url_argument_username = request.GET.get("username")
         if("=" in url_argument_username):
             return render(request, "403.html", status=403)
-        dec_username  = SecureHasher.AESCipher.decrypt(ciphertext = url_argument_username)
-        
+        try:
+            dec_username  = SecureHasher.AESCipher.decrypt(ciphertext = url_argument_username)
+        except binascii.Error:
+            return render(request, "403.html", status=403)
+
     if("?code=" in url):
 
         url_argument = request.GET.get("code")
         
         if("=" in url_argument):
             return render(request, "403.html", status=403)
-        
-        dec_code = SecureHasher.AESCipher.decrypt(ciphertext= url_argument)
+        try:
+            dec_code = SecureHasher.AESCipher.decrypt(ciphertext= url_argument)
+        except binascii.Error:
+            return render(request, "403.html", status = 403)
         
     else:
         return render(request, "403.html", status = 403)
