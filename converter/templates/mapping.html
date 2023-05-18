@@ -51,8 +51,7 @@
 
         document.getElementById('cols_italic').innerHTML += r
     }
-
-    xl = JSON.parse('{{json_file}}'.replace(/&quot;/g, '"'))
+    xl = JSON.parse("{{json_file}}".replace(/&quot;/g, '"'))
     draw_map(xl['map'])
 
     xl['headers'].forEach(draw_header)
