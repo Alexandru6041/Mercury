@@ -1,8 +1,6 @@
-import binascii
-from tkinter import E
-from types import NoneType
+from atexit import register
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate, logout, get_user_model
+from django.contrib.auth import login, authenticate, logout
 from main.forms import RegisterUser
 from main.forms import ChangePassword
 from django.contrib.auth.decorators import login_required
@@ -10,6 +8,7 @@ from django.core.validators import validate_email
 from sib_api_v3_sdk.rest import ApiException
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
+from utils.costum_backend.main import MyBackend
 # from django.contrib.auth.backends import
 
 # Utilities
@@ -43,13 +42,12 @@ def signin(request):
     if request.method == 'POST':
         username = request.POST["username"]
         password = request.POST["password"]
-        user = authenticate(request, username = username, password = password)
-        
+        user = MyBackend.authenticate(request, username = username, password = password)
         if user:
             login(request, user)
             return redirect("/")
-        
-        error = "Credentiale Incorecte"
+        else:
+            error = "Credentiale Incorecte"
     
     return render(request, 'signin.html', {'error_credentials': error})
 
@@ -58,22 +56,15 @@ def signUp(request):
         return redirect("/")
         
     error_credentials = ''
+    creation_form = RegisterUser()
     
     if request.method == 'POST':
         creation_form = RegisterUser(request.POST)
+        email_user = request.POST["email"]
+        username_user = request.POST["username"]
         
-        if creation_form.is_valid():
-            email_user = request.POST["email"]
-            username_user = request.POST["username"]
-            
-            # if(User.objects.filter(username = username_user).exists() == True):
-            #     error_credentials = "Acest nume de utilizator este deja in uz"
-            
-            if(User.objects.filter(email = email_user).exists() == False): 
-                creation_form.save()
-                return redirect("/sign-in/")
-            else:
-                error_credentials = "Aceasta adresa de email este deja in uz"
+        if(User.objects.filter(email = email_user).exists() == True): 
+            error_credentials = "Aceasta adresa de email este deja in uz"
         
         if(error_credentials == ''):
             error_dict = creation_form.errors
@@ -81,21 +72,26 @@ def signUp(request):
             for field in error_dict:
                 error_credentials += error_dict[field]
                 
-    else:
-        creation_form = RegisterUser()
+        if creation_form.is_valid():
+            creation_form.save()
+            return redirect("/sign-in/")
+        
+        else:
+            creation_form = RegisterUser()
         
         
     return render(request, 'signup.html', {'form': creation_form, 'error_credentials' : error_credentials})
 
 def forgot_password(request):
     error = None
-
     if request.method == "POST":
         username = request.POST["user_detail"]
         pin = gService.generate_pin()
         pin = str(pin)
         enc_pin = SecureHasher.AESCipher.encrypt(plaintext=pin)
         enc_username = SecureHasher.AESCipher.encrypt(plaintext=username)
+        
+        
         def valid_email(email: str):
             try:
                 validate_email(email)
@@ -103,7 +99,6 @@ def forgot_password(request):
                 return False
         
             return True
-        print(username, valid_email(username))
         if(valid_email(username) == False):
             try:
                 user = User.objects.get(username = username)
@@ -142,15 +137,18 @@ def forgot_password(request):
 def code_check(request):
     error = None
     url = request.build_absolute_uri()
+    
     if("&username=" not in url):
         return render(request, "403.html", status=403)
     else:
         url_argument_username = request.GET.get("username")
         if("=" in url_argument_username):
             return render(request, "403.html", status=403)
+        
+        
         try:
             dec_username  = SecureHasher.AESCipher.decrypt(ciphertext = url_argument_username)
-        except binascii.Error:
+        except:
             return render(request, "403.html", status=403)
 
     if("?code=" in url):
@@ -161,7 +159,7 @@ def code_check(request):
             return render(request, "403.html", status=403)
         try:
             dec_code = SecureHasher.AESCipher.decrypt(ciphertext= url_argument)
-        except binascii.Error:
+        except:
             return render(request, "403.html", status = 403)
         
     else:
@@ -183,23 +181,17 @@ def code_check(request):
         user_code = request.POST["pin"]
         new_password = request.POST["new_password"]
         new_password_confirm = request.POST["new_password_confirm"]
-        
         error_dict = change_form.errors
 
         for field in error_dict:
             error_credentials += error_dict[field]
-            
-        if(change_form.is_valid()):
-            if(user_code == dec_code):
-                if(new_password != new_password_confirm):
-                    error = "Parolele nu coincid"
-            else:
-                error = "Codul introdus nu este corect. Verificati emailul"
-        else:
-            change_form = ChangePassword(user)
 
-        
-        print(error)
+        if(user_code == dec_code):
+            if(new_password != new_password_confirm):
+                error = "Parolele nu coincid"
+        else:
+            error = "Codul introdus nu este corect. Verificati emailul"
+
         
         if(error == None):
             try:
@@ -209,5 +201,16 @@ def code_check(request):
                 return redirect("/sign-in/")
             except User.DoesNotExist:
                 return render(request, "403.html", status=403)
+    else:
+        change_form = ChangePassword(user)
 
     return render(request, "change_password.html", {'error' : error, 'code' : url_argument, 'username' : url_argument_username, 'form' : change_form})
+
+def handler404(request, exception):
+    return render(request, "404.html", status = 404)
+
+def handler403(request, exception):
+    return render(request, "403.html", status = 403)
+
+def handler502(request, execption):
+    return render(request, "502.html", status = 502)

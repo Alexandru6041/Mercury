@@ -17,3 +17,7 @@ urlpatterns = [
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
+
+handler404 = "main.views.handler404"
+handler403 = "main.views.handler403"
+handler502 = "main.views.handler502"
