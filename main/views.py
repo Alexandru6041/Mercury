@@ -183,7 +183,6 @@ def code_check(request):
         new_password_confirm = request.POST["new_password_confirm"]
         
         
-        print(dec_code)
         if(user_code == dec_code):
             if(new_password != new_password_confirm):
                 error = 'Parolele nu coincid'
