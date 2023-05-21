@@ -1,6 +1,6 @@
 from atexit import register
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import login, logout
 from main.forms import RegisterUser
 from main.forms import ChangePassword
 from django.contrib.auth.decorators import login_required
@@ -8,12 +8,12 @@ from django.core.validators import validate_email
 from sib_api_v3_sdk.rest import ApiException
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
-from utils.costum_backend.main import MyBackend
 # from django.contrib.auth.backends import
 
 # Utilities
 from utils.communication_utils.main_c import gService
 from utils.hash_utils.hash_utils import SecureHasher
+from utils.costum_backend.main import MyBackend
 
 @login_required(login_url="/sign-in/", redirect_field_name="")
 def index(request):
@@ -135,7 +135,7 @@ def forgot_password(request):
 
 
 def code_check(request):
-    error = None
+    error = ''
     url = request.build_absolute_uri()
     
     if("&username=" not in url):
@@ -181,19 +181,28 @@ def code_check(request):
         user_code = request.POST["pin"]
         new_password = request.POST["new_password"]
         new_password_confirm = request.POST["new_password_confirm"]
-        error_dict = change_form.errors
-
-        for field in error_dict:
-            error_credentials += error_dict[field]
-
+        
+        
+        print(dec_code)
         if(user_code == dec_code):
             if(new_password != new_password_confirm):
-                error = "Parolele nu coincid"
+                error = 'Parolele nu coincid'
+                
+            if(error == '' and user.password == new_password):
+                error = 'Parola noua nu poate fi la fel cu cea veche'
+            
+            error_dict = MyBackend.validate_password(new_password, user)
+
+            if(error == '' and len(error_dict) != 0):
+                for i in range(len(error_dict)):
+                    error += error_dict[i]
+            
         else:
-            error = "Codul introdus nu este corect. Verificati emailul"
+            error = 'Codul introdus nu este corect. Verificati emailul'
+        
 
         
-        if(error == None):
+        if(error == ''):
             try:
                 new_password = make_password(new_password)
                 user.password = new_password
@@ -206,6 +215,9 @@ def code_check(request):
 
     return render(request, "change_password.html", {'error' : error, 'code' : url_argument, 'username' : url_argument_username, 'form' : change_form})
 
+
+
+# Costum Http Errors Handler
 def handler404(request, exception):
     return render(request, "404.html", status = 404)
 

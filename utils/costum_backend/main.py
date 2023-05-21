@@ -1,5 +1,7 @@
 from django.contrib.auth.backends import BaseBackend
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from django.contrib.auth.password_validation import validate_password
 
 class MyBackend(BaseBackend):
     
@@ -16,3 +18,15 @@ class MyBackend(BaseBackend):
             return user
         
         return None
+    
+    
+    def validate_password(password, user = None):
+        error_messages = []
+        
+        try:
+            validate_password(password, user)
+        except ValidationError as e:
+            for i in range(len(e.messages)):
+                error_messages.append(e.messages[i])
+        
+        return error_messages
