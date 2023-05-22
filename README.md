@@ -16,6 +16,36 @@ Pentru a usura munca contabililor din Romania ce primesc pe mana mii de facturi 
 * openpyxl - citirea fisierelor .xlsx
 
 ## Ghid de instalare
+Pentru o instalare rapida cu **pipenv** urmariti pasii de mai jos:
+** *Python se presupune a fi instalat*
+* Pentru a instala *pipenv*:
 
+  Windows
+  ```bash
+  pip install pipenv
+  ```
+  Linux based
+  ```bash
+  pip3 install pipenv
+  ```
+1. Instalati environmentul deja definit in Pipfile.lock:
+    ```bash
+    pipenv sync
+    ```
+2. Activati environmentul:
+    ```bash
+    pipenv shell
+    ```
+3. Porniti un server local folosind comanda:
+
+    Windows
+    ```bash
+    python manage.py runserver
+    ```
+    Linux based
+    ```bash
+    python3 manage.py runserver
+    ```
+    * Puteti specifica adresa IP la care sa se deschida serverul dupa comanda *runserver*.
 ## FAQ
 
