@@ -7,19 +7,20 @@ from string import Template
 from converter_functions._math import add_1
 
 class MappedColumn():
+    '''
+    Tip special pentru a deosebi o constanta de o coloana din doc .xlsx
+    '''
     def __init__(self, col:str):
         self.col = col
 
 
 def reformat(data:datetime.datetime):
     return data.strftime('%d.%m.%Y')
-    an = data[:4]
-    luna = data[5:7]
-    ziua = data[8:10]
-
-    return f"{ziua}.{luna}.{an}"
 
 def load(sheet, RANGE:tuple, mapping:dict) -> dict:
+    '''
+    Deschide documentul xlsx si returneaza facturile sub forma de dict
+    '''
     facturi = {}
 
     with open('templates/facturi/linie_template.xml', 'r') as f:
@@ -62,6 +63,9 @@ def load(sheet, RANGE:tuple, mapping:dict) -> dict:
     return facturi
 
 def check_n_correct(xml:str) -> str:
+    '''
+    Verifica si modifica un str pentru a nu avea caractere ce nu apar in alfabetul englezesc
+    '''
     x = 0
 
     while x < len(xml):
@@ -78,6 +82,9 @@ def check_n_correct(xml:str) -> str:
 
 
 def gen_xml(wb:str, sh:str, RANGE:tuple, mapping:dict, output_path:str) -> None:
+    '''
+    Genereaza fisierul .xml rezultat in urma procesarii datelor furnizate de client
+    '''
     sheet = openpyxl.load_workbook(wb, data_only=True)[sh]
     facturi = load(sheet, RANGE, mapping)
 
@@ -141,6 +148,9 @@ def save_uploaded_xlsx(f, user_id:int):
     return path
 
 def as_json(path:str, sh:str, header_row:int):
+    '''
+    Incarca fisierul .xlsx in format json pentru a putea fi afisat in pagina web
+    '''
     sheet = openpyxl.load_workbook(path, data_only=True)[sh]
     header_col = 'A'
 
@@ -188,6 +198,9 @@ def get_output_path(id, cif_firma):
     return output_path
 
 def proccess(map:forms.Form, model, user_id):
+    '''
+    Genereaza fisierul xml si returneaza adresa lui
+    '''
     path = f'input files/{model.nume}'
     data, l1, l2 = map.proccess(model.nume_firma, model.cif_firma) 
     output_path = get_output_path(user_id, model.cif_firma)
