@@ -4,6 +4,9 @@ from django.dispatch import receiver
 import os
 
 class FileModel(models.Model):
+    '''
+    Salveaza in baza de date fisierele incarcate de utilizatori
+    '''
     nume = models.CharField(max_length=50, unique=True)
     dimensiune = models.FloatField()
     sheet = models.CharField(max_length=20)

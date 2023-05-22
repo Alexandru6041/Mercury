@@ -2,7 +2,7 @@ from django import forms
 from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from .forms import FormIesiri, FormIntrari, FormMap
-from functions.functions import *
+from utils.converter_functions.functions import *
 from .models import FileModel
 from django.core.exceptions import PermissionDenied
 import datetime

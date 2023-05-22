@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
-from functions.functions import MappedColumn
+from utils.converter_functions.functions import MappedColumn
 
 def validate_file(file):
     if file.name.split('.')[-1].lower() != 'xlsx':
