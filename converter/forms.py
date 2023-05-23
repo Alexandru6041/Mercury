@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
-from utils.converter_functions.functions import MappedColumn
+from utils.converter_functions.functions import MappedColumn, exists_sheet
 
 def validate_file(file):
     if file.name.split('.')[-1].lower() != 'xlsx':
@@ -29,12 +29,37 @@ class FormIesiri(forms.Form):
     furnizor_nume = forms.CharField(max_length=100, label="Numele Furnizorului")
     furnizor_cif = forms.IntegerField(label="CUIul Furnizorului")
 
+    def is_valid(self):
+        if not super(FormIesiri, self).is_valid():
+            return False
+        
+        e = exists_sheet(self.cleaned_data['file'], self.cleaned_data['sheet'])
+
+        if e:
+            return True
+
+        self.add_error('sheet', 'Sheet-ul introdus nu exista!')
+        return False
+
+
 class FormIntrari(forms.Form):
     file = forms.FileField(required=True, label='Fisierul .xlsx', validators=[validate_file])
     sheet = forms.CharField(required=True)
     header_row = forms.IntegerField(required=True, label='Randul cu header')
     client_nume = forms.CharField(max_length=100, label="Numele Clientului")
     client_cif = forms.IntegerField(label="CUIul Clientului")
+
+    def is_valid(self):
+        if not super(FormIesiri, self).is_valid():
+            return False
+        
+        e = exists_sheet(self.cleaned_data['file'], self.cleaned_data['sheet'])
+
+        if e:
+            return True
+
+        self.add_error('sheet', 'Sheet-ul introdus nu exista!')
+        return False
 
 class FormMap(forms.Form):
     interval = forms.CharField(initial='1-10', required=True, label='Interval*', validators=[check_range])

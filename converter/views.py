@@ -5,7 +5,6 @@ from .forms import FormIesiri, FormIntrari, FormMap
 from utils.converter_functions.functions import *
 from .models import FileModel
 from django.core.exceptions import PermissionDenied
-import datetime
 from pathlib import Path
 
 def iesiri(request):
@@ -33,7 +32,7 @@ def iesiri(request):
             file = path.split("/")[-1].split(".")[:-1]
             file = file[0] + '.' + file[1]
 
-            return HttpResponseRedirect(f'iesiri/mapping/{file}')
+            return HttpResponseRedirect(f'mapping/{file}')
         
     return render(request, 'iesiri.html', {'form': form})
 
