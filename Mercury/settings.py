@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     
     #Third-party
     'main.apps.MainConfig',
-    'converter.apps.ConverterConfig'
+    'converter.apps.ConverterConfig',
 ]
 
 MIDDLEWARE = [
@@ -106,6 +106,17 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Backend for admin-page
+
+AUTHENTICATION_BACKENDS = [
+    'utils.costum_backend.main.MyAdminBackend',
+]
+
+# Password Hashing Algorithms
+
+PASSWORD_HASHERS = [
+    'utils.costum_backend.main.MyHasher',
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/

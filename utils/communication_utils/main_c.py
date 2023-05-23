@@ -13,7 +13,7 @@ class gService(object):
     
     def send_mail(name_from, email_from, email_to, name_to, Subject, path_to_html, pin, request):
         configuration = sib_api_v3_sdk.Configuration()
-        configuration.api_key['api-key'] = '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'
+        configuration.api_key['api-key'] = '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'
 
         api_instance = sib_api_v3_sdk.TransactionalEmailsApi(
             sib_api_v3_sdk.ApiClient(configuration))
