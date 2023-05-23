@@ -12,6 +12,7 @@ def iesiri(request):
         raise PermissionDenied
     
     form = FormIesiri()
+    errors = ''
 
     if request.method == 'POST':
         # tip: [0, 1] -> 0 intrari, 1 iesiri
@@ -34,7 +35,13 @@ def iesiri(request):
 
             return HttpResponseRedirect(f'mapping/{file}')
         
-    return render(request, 'iesiri.html', {'form': form})
+        e = form.errors
+        for key in e:
+            errors += e[key] + '\n'
+        
+        errors.pop()
+        
+    return render(request, 'iesiri.html', {'form': '', 'errors': errors})
 
 
 def iesiri_mapping(request, file):
