@@ -4,7 +4,9 @@ from pathlib import Path
 from django import forms
 import openpyxl
 from string import Template
+# from _math import add_1
 from utils.converter_functions._math import add_1
+from utils.exceptions import WrongTypeFieldException
 
 class MappedColumn():
     '''
@@ -34,7 +36,8 @@ def load(sheet, RANGE:tuple, mapping:dict) -> dict:
         
         factura = ''
         data = {
-            'id': len(facturi[nrdoc]['facturi']) + 1
+            'id': len(facturi[nrdoc]['facturi']) + 1,
+            'pv': ''
         }
 
         for key in mapping:
@@ -113,6 +116,15 @@ def gen_xml(wb:str, sh:str, RANGE:tuple, mapping:dict, output_path:str) -> None:
         else:
             furnizor = {'nume': sheet[f'{mapping["nume_fur"].col}{line}'].value, 'cif': sheet[f'{mapping["cif_fur"].col}{line}'].value}
 
+        try:
+            if type(mapping['data']) == MappedColumn:
+                data = reformat(sheet[f'{mapping["data"].col}{line}'].value)
+            
+            else: data = mapping["data"]
+
+        except AttributeError:
+            raise WrongTypeFieldException('data')
+
         fact_final = t_fact.substitute({
             'nume_furnizor': furnizor['nume'],
             'cif_furnizor': furnizor['cif'],
@@ -125,12 +137,11 @@ def gen_xml(wb:str, sh:str, RANGE:tuple, mapping:dict, output_path:str) -> None:
             'jud_cli': "",
             'adr_cli': "",
             'nr_doc': nrdoc,
-            'data_doc': reformat(sheet[f'{mapping["data"].col}{line}'].value),
+            'data_doc': data,
             'tax_inv': '',
             'tva_incasare': '',
             'continut': facturi[nrdoc]['final']
         })
-
         xml += fact_final
         xml += '\n'
     
@@ -213,4 +224,4 @@ def proccess(map:forms.Form, model, user_id):
     return output_path
 
 if __name__ == '__main__':
-    print(reformat(datetime.datetime.today()))
+    print(reformat('ceva'))

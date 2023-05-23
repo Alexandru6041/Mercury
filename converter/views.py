@@ -48,8 +48,13 @@ def iesiri_mapping(request, file):
         map = FormMap(1, request.POST)
 
         if map.is_valid():
-            output_path = proccess(map, model, request.user.id)
-            return HttpResponseRedirect(f'/files/{output_path.split("/")[-1]}')
+            try:
+                output_path = proccess(map, model, request.user.id)
+                return HttpResponseRedirect(f'/files/{output_path.split("/")[-1]}')
+            
+            except WrongTypeFieldException as e:
+                map.add_error(e.field, 'Variabila invalida! Trebuie sa fie constanta sau tip Date')
+
         
         return render(request, 'mapping.html', {'form': map, 'json_file': as_json(path, model.sheet, model.rand_header)})
 
@@ -96,9 +101,12 @@ def intrari_mapping(request, file):
         map = FormMap(0, request.POST)
 
         if map.is_valid():
-            output_path = proccess(map, model, request.user.id)
-
-            return HttpResponseRedirect(f'/files/{output_path.split("/")[-1]}')
+            try:
+                output_path = proccess(map, model, request.user.id)
+                return HttpResponseRedirect(f'/files/{output_path.split("/")[-1]}')
+            
+            except WrongTypeFieldException as e:
+                map.add_error(e.field, 'Variabila invalida! Trebuie sa fie constanta sau tip Date')
         
         return render(request, 'mapping.html', {'form': map, 'json_file': as_json(path, model.sheet, model.rand_header)})
 
