@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 from os.path import join #os.path.join()
-from subprocess import call #subprocess.call()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +26,7 @@ SECRET_KEY = 'django-insecure-@(nwa*c-u*4a_o^!=p2^2l0e*#8p9r#&(r94q&i6x2u1wzp=k9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.100.7']
 
 APPEND_SLASH = False
 
@@ -43,7 +42,7 @@ INSTALLED_APPS = [
     
     #Third-party
     'main.apps.MainConfig',
-    'converter.apps.ConverterConfig'
+    'converter.apps.ConverterConfig',
 ]
 
 MIDDLEWARE = [
@@ -107,6 +106,17 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Backend for admin-page
+
+AUTHENTICATION_BACKENDS = [
+    'utils.costum_backend.main.MyAdminBackend',
+]
+
+# Password Hashing Algorithms
+
+PASSWORD_HASHERS = [
+    'utils.costum_backend.main.MyHasher',
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/

@@ -12,8 +12,7 @@ from django.contrib.auth.models import User
 
 # Utilities
 from utils.communication_utils.main_c import gService
-from utils.hash_utils.hash_utils import SecureHasher
-from utils.costum_backend.main import MyBackend
+from utils.costum_backend.main import MyBackend, AESCipher, MyHasher
 
 @login_required(login_url="/sign-in/", redirect_field_name="")
 def index(request):
@@ -88,8 +87,8 @@ def forgot_password(request):
         username = request.POST["user_detail"]
         pin = gService.generate_pin()
         pin = str(pin)
-        enc_pin = SecureHasher.AESCipher.encrypt(plaintext=pin)
-        enc_username = SecureHasher.AESCipher.encrypt(plaintext=username)
+        enc_pin = AESCipher.encrypt(plaintext=pin)
+        enc_username = AESCipher.encrypt(plaintext=username)
         
         
         def valid_email(email: str):
@@ -147,7 +146,7 @@ def code_check(request):
         
         
         try:
-            dec_username  = SecureHasher.AESCipher.decrypt(ciphertext = url_argument_username)
+            dec_username  = AESCipher.decrypt(ciphertext = url_argument_username)
         except:
             return render(request, "403.html", status=403)
 
@@ -158,7 +157,7 @@ def code_check(request):
         if("=" in url_argument):
             return render(request, "403.html", status=403)
         try:
-            dec_code = SecureHasher.AESCipher.decrypt(ciphertext= url_argument)
+            dec_code = AESCipher.decrypt(ciphertext= url_argument)
         except:
             return render(request, "403.html", status = 403)
         
@@ -203,7 +202,7 @@ def code_check(request):
         
         if(error == ''):
             try:
-                new_password = make_password(new_password)
+                new_password = make_password(password = new_password, salt = None, hasher='myhasher')
                 user.password = new_password
                 user.save()
                 return redirect("/sign-in/")
