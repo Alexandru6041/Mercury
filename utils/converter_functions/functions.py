@@ -4,7 +4,7 @@ from pathlib import Path
 from django import forms
 import openpyxl
 from string import Template
-from converter_functions._math import add_1
+from utils.converter_functions._math import add_1
 
 class MappedColumn():
     '''
@@ -80,6 +80,9 @@ def check_n_correct(xml:str) -> str:
     
     return xml
 
+def exists_sheet(file, sheet:str) -> bool:
+    workbook = openpyxl.load_workbook(file, data_only=True)
+    return (sheet in workbook.sheetnames)
 
 def gen_xml(wb:str, sh:str, RANGE:tuple, mapping:dict, output_path:str) -> None:
     '''
