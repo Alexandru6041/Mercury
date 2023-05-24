@@ -24,7 +24,7 @@ def check_range(range:str):
 
 class FormIesiri(forms.Form):
     file = forms.FileField(required=True, label='Fisierul .xlsx', validators=[validate_file])
-    sheet = forms.CharField(required=True)
+    sheet = forms.CharField(required=True, label='Sheet')
     header_row = forms.IntegerField(required=True, label='Randul cu header')
     furnizor_nume = forms.CharField(max_length=100, label="Numele Furnizorului")
     furnizor_cif = forms.IntegerField(label="CUIul Furnizorului")
@@ -44,7 +44,7 @@ class FormIesiri(forms.Form):
 
 class FormIntrari(forms.Form):
     file = forms.FileField(required=True, label='Fisierul .xlsx', validators=[validate_file])
-    sheet = forms.CharField(required=True)
+    sheet = forms.CharField(required=True, label='Sheet')
     header_row = forms.IntegerField(required=True, label='Randul cu header')
     client_nume = forms.CharField(max_length=100, label="Numele Clientului")
     client_cif = forms.IntegerField(label="CUIul Clientului")

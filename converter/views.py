@@ -1,4 +1,3 @@
-from django import forms
 from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from .forms import FormIesiri, FormIntrari, FormMap
@@ -6,6 +5,7 @@ from utils.converter_functions.functions import *
 from .models import FileModel
 from django.core.exceptions import PermissionDenied
 from pathlib import Path
+from string import Template
 
 def iesiri(request):
     if not request.user.is_authenticated:
@@ -13,6 +13,7 @@ def iesiri(request):
     
     form = FormIesiri()
     errors = ''
+    html_form = ''
 
     if request.method == 'POST':
         # tip: [0, 1] -> 0 intrari, 1 iesiri
@@ -40,8 +41,43 @@ def iesiri(request):
             errors += e[key] + '\n'
         
         errors.pop()
+    
+    with open('templates/html/field.html', 'r') as f:
+        field_template = Template(f.read())
+    
+    for field in form.fields:
+        _type = 'text'
+        value = None
+
+        match(type(form.fields[field])):
+            case forms.FileField:
+                _type = 'file'
+            
+            case forms.IntegerField:
+                _type = 'number'
+                if request.method == 'POST':
+                    value = form.fields[field].value
+            
+            case _:
+                if request.method == 'POST':
+                    value = form.fields[field].value
+                _type = 'text'
+                
+        html_form += field_template.substitute({
+            'type': _type,
+            'placeholder': form.fields[field].label,
+            'name': field,
+            'value': '' if not value else value,
+            'required': 'required' if(form.fields[field].required) else ''
+        }) + '\n'
+    
+    with open('converter/templates/iesiri.html', 'r') as f:
+        html_template = Template(f.read())
+    
+    with open('converter/templates/temp_iesiri.html', 'w') as f:
+        f.write(html_template.substitute({'form': html_form}))
         
-    return render(request, 'iesiri.html', {'form': '', 'errors': errors})
+    return render(request, 'temp_iesiri.html', {'errors': errors})
 
 
 def iesiri_mapping(request, file):
