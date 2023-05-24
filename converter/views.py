@@ -13,7 +13,6 @@ def iesiri(request):
     
     form = FormIesiri()
     errors = ''
-    html_form = ''
 
     if request.method == 'POST':
         # tip: [0, 1] -> 0 intrari, 1 iesiri
@@ -77,6 +76,7 @@ def intrari(request):
         raise PermissionDenied
     
     form = FormIntrari()
+    errors = ''
 
     if request.method == 'POST':
         # tip: [0, 1] -> 0 intrari, 1 iesiri
@@ -99,7 +99,16 @@ def intrari(request):
 
             return HttpResponseRedirect(f'mapping/{file}')
         
-    return render(request, 'intrari.html', {'form': form})
+        e = form.errors
+        for key in e:
+            errors += e[key] + '\n'
+        
+        errors.pop()
+    
+    with open('converter/templates/temp_intrari.html', 'w') as f:
+        f.write(generate_form_html(form.fields, 'converter/templates/intrari.html', (request.POST if (request.method == 'POST') else {})))
+        
+    return render(request, 'temp_intrari.html', {'errors': errors})
 
 def intrari_mapping(request, file):
     if not request.user.is_authenticated or request.user.id != int(file.split('_')[0]):
