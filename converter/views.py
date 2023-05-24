@@ -56,11 +56,11 @@ def iesiri(request):
             case forms.IntegerField:
                 _type = 'number'
                 if request.method == 'POST':
-                    value = form.fields[field].value
+                    value = request.POST[field]
             
             case _:
                 if request.method == 'POST':
-                    value = form.fields[field].value
+                    value = request.POST[field]
                 _type = 'text'
                 
         html_form += field_template.substitute({
