@@ -1,11 +1,11 @@
 from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
+from utils.converter_functions.views_functions import generate_form_html
 from .forms import FormIesiri, FormIntrari, FormMap
 from utils.converter_functions.functions import *
 from .models import FileModel
 from django.core.exceptions import PermissionDenied
 from pathlib import Path
-from string import Template
 
 def iesiri(request):
     if not request.user.is_authenticated:
@@ -13,7 +13,6 @@ def iesiri(request):
     
     form = FormIesiri()
     errors = ''
-    html_form = ''
 
     if request.method == 'POST':
         # tip: [0, 1] -> 0 intrari, 1 iesiri
@@ -42,40 +41,8 @@ def iesiri(request):
         
         errors.pop()
     
-    with open('templates/html/field.html', 'r') as f:
-        field_template = Template(f.read())
-    
-    for field in form.fields:
-        _type = 'text'
-        value = None
-
-        match(type(form.fields[field])):
-            case forms.FileField:
-                _type = 'file'
-            
-            case forms.IntegerField:
-                _type = 'number'
-                if request.method == 'POST':
-                    value = request.POST[field]
-            
-            case _:
-                if request.method == 'POST':
-                    value = request.POST[field]
-                _type = 'text'
-                
-        html_form += field_template.substitute({
-            'type': _type,
-            'placeholder': form.fields[field].label,
-            'name': field,
-            'value': '' if not value else value,
-            'required': 'required' if(form.fields[field].required) else ''
-        }) + '\n'
-    
-    with open('converter/templates/iesiri.html', 'r') as f:
-        html_template = Template(f.read())
-    
     with open('converter/templates/temp_iesiri.html', 'w') as f:
-        f.write(html_template.substitute({'form': html_form}))
+        f.write(generate_form_html(form.fields, 'converter/templates/iesiri.html', (request.POST if (request.method == 'POST') else {})))
         
     return render(request, 'temp_iesiri.html', {'errors': errors})
 
@@ -109,6 +76,7 @@ def intrari(request):
         raise PermissionDenied
     
     form = FormIntrari()
+    errors = ''
 
     if request.method == 'POST':
         # tip: [0, 1] -> 0 intrari, 1 iesiri
@@ -131,7 +99,16 @@ def intrari(request):
 
             return HttpResponseRedirect(f'mapping/{file}')
         
-    return render(request, 'intrari.html', {'form': form})
+        e = form.errors
+        for key in e:
+            errors += e[key] + '\n'
+        
+        errors.pop()
+    
+    with open('converter/templates/temp_intrari.html', 'w') as f:
+        f.write(generate_form_html(form.fields, 'converter/templates/intrari.html', (request.POST if (request.method == 'POST') else {})))
+        
+    return render(request, 'temp_intrari.html', {'errors': errors})
 
 def intrari_mapping(request, file):
     if not request.user.is_authenticated or request.user.id != int(file.split('_')[0]):
