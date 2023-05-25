@@ -1,6 +1,6 @@
-from django import forms
 from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
+from utils.converter_functions.views_functions import generate_form_html
 from .forms import FormIesiri, FormIntrari, FormMap
 from utils.converter_functions.functions import *
 from .models import FileModel
@@ -12,6 +12,7 @@ def iesiri(request):
         raise PermissionDenied
     
     form = FormIesiri()
+    errors = ''
 
     if request.method == 'POST':
         # tip: [0, 1] -> 0 intrari, 1 iesiri
@@ -34,7 +35,16 @@ def iesiri(request):
 
             return HttpResponseRedirect(f'mapping/{file}')
         
-    return render(request, 'iesiri.html', {'form': form})
+        e = form.errors
+        for key in e:
+            errors += e[key] + '\n'
+        
+        errors.pop()
+    
+    with open('converter/templates/temp_iesiri.html', 'w') as f:
+        f.write(generate_form_html(form.fields, 'converter/templates/iesiri.html', (request.POST if (request.method == 'POST') else {})))
+        
+    return render(request, 'temp_iesiri.html', {'errors': errors})
 
 
 def iesiri_mapping(request, file):
@@ -55,17 +65,25 @@ def iesiri_mapping(request, file):
             except WrongTypeFieldException as e:
                 map.add_error(e.field, 'Variabila invalida! Trebuie sa fie constanta sau tip Date')
 
+        e = map.errors
+        for key in e:
+            errors += e[key] + '\n'
         
-        return render(request, 'mapping.html', {'form': map, 'json_file': as_json(path, model.sheet, model.rand_header)})
+        errors.pop()
 
-    map = FormMap(1)
-    return render(request, 'mapping.html', {'form': map, 'json_file': as_json(path, model.sheet, model.rand_header)})
+    else: map = FormMap(1)
+
+    with open('converter/templates/temp_mapping.html', 'w') as f:
+        f.write(generate_form_html(map.fields, 'converter/templates/mapping.html', request.POST if request.method == 'POST' else {}))
+
+    return render(request, 'temp_mapping.html', {'form': map, 'json_file': as_json(path, model.sheet, model.rand_header)})
 
 def intrari(request):
     if not request.user.is_authenticated:
         raise PermissionDenied
     
     form = FormIntrari()
+    errors = ''
 
     if request.method == 'POST':
         # tip: [0, 1] -> 0 intrari, 1 iesiri
@@ -88,7 +106,16 @@ def intrari(request):
 
             return HttpResponseRedirect(f'mapping/{file}')
         
-    return render(request, 'intrari.html', {'form': form})
+        e = form.errors
+        for key in e:
+            errors += e[key] + '\n'
+        
+        errors.pop()
+    
+    with open('converter/templates/temp_intrari.html', 'w') as f:
+        f.write(generate_form_html(form.fields, 'converter/templates/intrari.html', (request.POST if (request.method == 'POST') else {})))
+        
+    return render(request, 'temp_intrari.html', {'errors': errors})
 
 def intrari_mapping(request, file):
     if not request.user.is_authenticated or request.user.id != int(file.split('_')[0]):

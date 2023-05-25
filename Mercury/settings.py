@@ -11,8 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-from os.path import join #os.path.join()
-from subprocess import call #subprocess.call()
+from os.path import join
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -43,7 +42,7 @@ INSTALLED_APPS = [
     
     #Third-party
     'main.apps.MainConfig',
-    'converter.apps.ConverterConfig'
+    'converter.apps.ConverterConfig',
 ]
 
 MIDDLEWARE = [
@@ -61,7 +60,7 @@ ROOT_URLCONF = 'Mercury.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -107,6 +106,17 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Backend for admin-page
+
+AUTHENTICATION_BACKENDS = [
+    'utils.costum_backend.main.MyAdminBackend',
+]
+
+# Password Hashing Algorithms
+
+PASSWORD_HASHERS = [
+    'utils.costum_backend.main.MyHasher',
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
@@ -130,3 +140,8 @@ STATICFILES_DIRS = [join(BASE_DIR, 'main/static')]
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_ACCOUNT_PASSWORD = 'bnffjdnsktzuvyaq'
+EMAIL_ACCOUNT = 'cacenschivlad@gmail.com'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_PORT = 587

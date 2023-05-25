@@ -1,0 +1,124 @@
+{%extends 'base.html'%}
+
+{%block body%}
+<body class="img js-fullheight">
+    <section class="ftco-section">
+        <div class="container">
+
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center mb-5">
+                    <h2 class="heading-section">Mercury</h2>
+                    <h2 class="heading-section">Corespondenta intre coloane</h2>
+                </div>
+            </div>
+            
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-4">
+                    <form method="POST">
+                        {%csrf_token%}
+                        <div class="form-group">
+    <input type="text" class="form-control" placeholder="Interval*" name = "interval" value="" required>
+</div>
+<div class="form-group">
+    <input type="text" class="form-control" placeholder="NRDOC" name = "nrdoc" value="" >
+</div>
+<div class="form-group">
+    <input type="text" class="form-control" placeholder="DENPR" name = "denpr" value="" >
+</div>
+<div class="form-group">
+    <input type="text" class="form-control" placeholder="UNITATE DE MASURA" name = "um" value="" >
+</div>
+<div class="form-group">
+    <input type="text" class="form-control" placeholder="CANTITATE" name = "cant" value="" >
+</div>
+<div class="form-group">
+    <input type="text" class="form-control" placeholder="PRET" name = "pret" value="" >
+</div>
+<div class="form-group">
+    <input type="text" class="form-control" placeholder="VALOARE" name = "val" value="" >
+</div>
+<div class="form-group">
+    <input type="text" class="form-control" placeholder="COTA TVA" name = "cota_tva" value="" >
+</div>
+<div class="form-group">
+    <input type="text" class="form-control" placeholder="TVA" name = "tva" value="" >
+</div>
+<div class="form-group">
+    <input type="text" class="form-control" placeholder="CONT CONTABIL" name = "cont" value="" >
+</div>
+<div class="form-group">
+    <input type="text" class="form-control" placeholder="DATA" name = "data" value="" >
+</div>
+<div class="form-group">
+    <input type="text" class="form-control" placeholder="NUME CLIENT" name = "nume_cli" value="" >
+</div>
+<div class="form-group">
+    <input type="text" class="form-control" placeholder="CIF CLIENT" name = "cif_cli" value="" >
+</div>
+
+                        <button type="submit" name="compile" class="form-control btn btn-primary submit px-3">Configureaza</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <center>
+        <h3 class="heading-section">Preview</h3>
+        <table class="table table-bordered" id="preview">
+            <thead>
+                <tr id="cols_italic" style="font-style: italic; color:gray">
+                    <th scope="col">#</th>
+                </tr>
+            </thead>
+            <tbody id="body">
+                <tr id="header_row">
+                    <th></th>
+                </tr>
+            </tbody>
+        </table>
+    </center>
+    
+</body>
+<style>
+    td{
+        color:white;
+    }
+    th{
+        color:white;
+    }
+</style>
+<script>
+    function draw_header(header){
+        r = '<th scope="col">' + header + '</th>\n'
+        
+        document.getElementById('header_row').innerHTML += r
+    }
+    
+    function draw_row(row){
+        r = ''
+        row.forEach((cell) => {
+            r += '<td>' + cell + '</td>\n'
+        })
+        
+        document.getElementById('body').innerHTML += '<tr>' + r + '</tr>\n'
+    }
+    function draw_map(map){
+        r = ''
+        map['cols'].forEach((col) => {
+            r += '<th scope="col">' + col + '</th>'
+        })
+        
+        document.getElementById('cols_italic').innerHTML += r
+    }
+    xl = JSON.parse("{{json_file}}".replace(/&quot;/g, '"'))
+    console.log(xl)
+    draw_map(xl['map'])
+    
+    xl['headers'].forEach(draw_header)
+    
+    xl['rows'].forEach(draw_row)
+    
+    
+</script>
+{%endblock%}

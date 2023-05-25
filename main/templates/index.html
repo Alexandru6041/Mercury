@@ -1,33 +1,107 @@
-{% load static %}
+{%  extends 'base.html' %}
 
-<!doctype html>
+{% block body %}
 
-<html lang = "en">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     
-    <head>
-
-        <title>Mercury</title>
-
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
-
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <nav class="navbar navbar-expand-lg">
         
-        <link rel = "stylesheet" href = "{% static 'css/style.css' %}" >
-
+        <div class="container-fluid">
         
-    </head>
-
-    <body>
+        <a href="/" class="navbar-brand myhref">&mdash; Mercury &mdash;</a>
         
-        {% csrf_token %}
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        
+            <div class = "bars"></div>
+            <div class = "bars"></div>
+            <div class = "bars"></div>
 
-            <h1>Hello {{ display_name }}</h1>
-            <a href="{% url 'iesiri' %}">Facturi iesiri</a>
-            <a href="{% url 'logout' %}" id="logout">Log Out</a>
-    </body>
+        </button>
 
-</html>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+        
+                <div class="navbar-nav">
+            
+                    <a href="/" class="nav-item nav-link active myhref">Acasa</a>
+                    <a href= {% url 'oferte' %} class="nav-item nav-link active myhref">Pricing</a>
+                    <a href= {% url 'despre_noi' %} class="nav-item nav-link active myhref">Despre Noi</a>
+            
+                </div>
+        
+                <div class="navbar-nav ms-auto">
+            
+                    <a href= {% url 'processcode' %} class="nav-item nav-link active myhref">Contul Meu</a>
+            
+                </div>
+        
+            </div>
+
+        </div>
+    
+    </nav>
+
+  <body class="img js-fullheight">
+      
+      <section class="ftco-section">
+          
+          <div class="container">
+                
+                <div class="row justify-content-center">
+                    
+                    <div class="col-md-6 col-lg-4">
+                        
+                        <div class="login-wrap p-0">
+                            
+                            <h3 class="mb-4 text-center">Hello {{ display_name }}</h3>
+                            <br>
+                            <a class = "myhref" href="{% url 'iesiri' %}"> <p class="w-100 text-center">&mdash; Facturi Iesiri &mdash;</p> </a>
+                            <a class = "myhref" href="{% url 'intrari' %}"> <p class="w-100 text-center">&mdash; Facturi Intrari &mdash;</p> </a>
+                            <a class = "myhref" href="{% url 'logout' %}"> <p class="w-100 text-center">&mdash; Log Out &mdash;</p> </a>
+                            
+                            
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                
+            </div>
+            
+        </section>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</body>
+
+
+<style>
+    .nav
+    {
+        color:transparent;
+    }
+    
+    a.myhref
+    {
+        text-decoration: none;
+        color: #fbceb5;
+  	    transition: 0.5s;
+    }
+
+    a.myhref:hover
+    {
+        color: white;
+    }
+
+    .bars
+    {
+        width: 30px;
+        height: 1.5px;
+        background-color: white;
+        margin: 5px 0;
+    }
+</style>
+{% endblock %}
+
 

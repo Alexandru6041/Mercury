@@ -192,7 +192,15 @@ def as_json(path:str, sh:str, header_row:int):
         row = [header_row + r]
 
         while h < len(headers):
-            row.append(str(sheet[f'{col}{header_row + r}'].value))
+            value = sheet[f'{col}{header_row + r}'].value
+
+            if type(value) == int and not value:
+                pass
+
+            elif not value:
+                value = ''
+
+            row.append(str(value))
             h += 1
             col = add_1(col)
         

@@ -1,21 +1,35 @@
-<head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.min.js"></script>
-</head>
+{%extends 'base.html'%}
 
-<body>
-    <h2>Corespondenta intre coloane</h2>
-    <form method="POST">
-        {%csrf_token%}
-        {{form}}
-        <button type="submit" name="compile">Configureaza</button>
-    </form>
+{%block body%}
+<body class="img js-fullheight">
+    <section class="ftco-section">
+        <div class="container">
 
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center mb-5">
+                    <h2 class="heading-section">Mercury</h2>
+                    <h2 class="heading-section">Corespondenta intre coloane</h2>
+                </div>
+            </div>
+            
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-4">
+                    <form method="POST">
+                        {%csrf_token%}
+                        $form
+                        <button type="submit" name="compile" class="form-control btn btn-primary submit px-3">Configureaza</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    
     <center>
-        <b>Preview</b>
-        <table id="preview">
+        <h3 class="heading-section">Preview</h3>
+        <table class="table table-bordered" id="preview">
             <thead>
                 <tr id="cols_italic" style="font-style: italic; color:gray">
-                    <th></th>
+                    <th scope="col">#</th>
                 </tr>
             </thead>
             <tbody id="body">
@@ -25,38 +39,47 @@
             </tbody>
         </table>
     </center>
-
+    
 </body>
-
+<style>
+    td{
+        color:white;
+    }
+    th{
+        color:white;
+    }
+</style>
 <script>
     function draw_header(header){
-        r = '<th>' + header + '</th>\n'
-
+        r = '<th scope="col">' + header + '</th>\n'
+        
         document.getElementById('header_row').innerHTML += r
     }
-
+    
     function draw_row(row){
         r = ''
         row.forEach((cell) => {
             r += '<td>' + cell + '</td>\n'
         })
-
+        
         document.getElementById('body').innerHTML += '<tr>' + r + '</tr>\n'
     }
     function draw_map(map){
         r = ''
         map['cols'].forEach((col) => {
-            r += '<th>' + col + '</th>'
+            r += '<th scope="col">' + col + '</th>'
         })
-
+        
         document.getElementById('cols_italic').innerHTML += r
     }
     xl = JSON.parse("{{json_file}}".replace(/&quot;/g, '"'))
+    console.log(xl)
     draw_map(xl['map'])
-
+    
     xl['headers'].forEach(draw_header)
-
+    
     xl['rows'].forEach(draw_row)
-
-
+    
+    
 </script>
+{%endblock%}
