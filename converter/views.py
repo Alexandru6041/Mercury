@@ -65,11 +65,18 @@ def iesiri_mapping(request, file):
             except WrongTypeFieldException as e:
                 map.add_error(e.field, 'Variabila invalida! Trebuie sa fie constanta sau tip Date')
 
+        e = map.errors
+        for key in e:
+            errors += e[key] + '\n'
         
-        return render(request, 'mapping.html', {'form': map, 'json_file': as_json(path, model.sheet, model.rand_header)})
+        errors.pop()
 
-    map = FormMap(1)
-    return render(request, 'mapping.html', {'form': map, 'json_file': as_json(path, model.sheet, model.rand_header)})
+    else: map = FormMap(1)
+
+    with open('converter/templates/temp_mapping.html', 'w') as f:
+        f.write(generate_form_html(map.fields, 'converter/templates/mapping.html', request.POST if request.method == 'POST' else {}))
+
+    return render(request, 'temp_mapping.html', {'form': map, 'json_file': as_json(path, model.sheet, model.rand_header)})
 
 def intrari(request):
     if not request.user.is_authenticated:
