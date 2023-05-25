@@ -50,7 +50,7 @@ class FormIntrari(forms.Form):
     client_cif = forms.IntegerField(label="CUIul Clientului")
 
     def is_valid(self):
-        if not super(FormIesiri, self).is_valid():
+        if not super(FormIntrari, self).is_valid():
             return False
         
         e = exists_sheet(self.cleaned_data['file'], self.cleaned_data['sheet'])

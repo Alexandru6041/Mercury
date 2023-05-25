@@ -9,6 +9,7 @@
                 <div class="col-md-6 text-center mb-5">
                     <h2 class="heading-section">Mercury</h2>
                     <h2 class="heading-section">Corespondenta intre coloane</h2>
+                    <h2 class="heading-section">{{model.nume_firma}}-{{model.cif_firma}}</h2>
                 </div>
             </div>
             
@@ -19,6 +20,11 @@
                         $form
                         <button type="submit" name="compile" class="form-control btn btn-primary submit px-3">Configureaza</button>
                     </form>
+                    {% if errors %}
+                        <div class = "fade-in-text">
+                            <p class = "w-100 text-center"><strong>Eroare:</strong> {{ errors }} </p>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

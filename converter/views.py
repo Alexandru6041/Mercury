@@ -54,6 +54,8 @@ def iesiri_mapping(request, file):
     path = f'input files/{file}.xlsx'
     model = FileModel.objects.get(nume=f'{file}.xlsx')
 
+    errors = ''
+
     if request.method == 'POST':
         map = FormMap(1, request.POST)
 
@@ -76,7 +78,7 @@ def iesiri_mapping(request, file):
     with open('converter/templates/temp_mapping.html', 'w') as f:
         f.write(generate_form_html(map.fields, 'converter/templates/mapping.html', request.POST if request.method == 'POST' else {}))
 
-    return render(request, 'temp_mapping.html', {'form': map, 'json_file': as_json(path, model.sheet, model.rand_header)})
+    return render(request, 'temp_mapping.html', {'model': model, 'form': map, 'json_file': as_json(path, model.sheet, model.rand_header), 'errors': errors})
 
 def intrari(request):
     if not request.user.is_authenticated:
@@ -121,6 +123,7 @@ def intrari_mapping(request, file):
     if not request.user.is_authenticated or request.user.id != int(file.split('_')[0]):
         raise PermissionDenied
     
+    errors = ''
     path = f'input files/{file}.xlsx'
     model = FileModel.objects.get(nume=f'{file}.xlsx')
 
@@ -135,11 +138,18 @@ def intrari_mapping(request, file):
             except WrongTypeFieldException as e:
                 map.add_error(e.field, 'Variabila invalida! Trebuie sa fie constanta sau tip Date')
         
-        return render(request, 'mapping.html', {'form': map, 'json_file': as_json(path, model.sheet, model.rand_header)})
+        e = map.errors
+        for key in e:
+            errors += e[key] + '\n'
+        
+        errors.pop()
 
-    map = FormMap(0)
-    j = as_json(path, model.sheet, model.rand_header)
-    return render(request, 'mapping.html', {'form': map, 'json_file': j})
+    else: map = FormMap(0)
+
+    with open('converter/templates/temp_mapping.html', 'w') as f:
+        f.write(generate_form_html(map.fields, 'converter/templates/mapping.html', request.POST if request.method == 'POST' else {}))
+
+    return render(request, 'temp_mapping.html', {'model': model, 'form': map, 'json_file': as_json(path, model.sheet, model.rand_header), 'errors': errors})
 
 
 def download_file(request, file):

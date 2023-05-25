@@ -1,0 +1,503 @@
+<Facturi>
+    <Factura>
+    <Antet>
+        <FurnizorNume>DEPOZITU NR.2 SRL</FurnizorNume>
+        <FurnizorCIF>35695148</FurnizorCIF>
+        <FurnizorNrRegCom></FurnizorNrRegCom>
+        <FurnizorCapital></FurnizorCapital>
+        <FurnizorTara></FurnizorTara>
+        <FurnizorJudet></FurnizorJudet>
+        <FurnizorAdresa></FurnizorAdresa>
+        <FurnizorBanca></FurnizorBanca>
+        <FurnizorIBAN></FurnizorIBAN>
+        <FurnizorInformatiiSuplimentare></FurnizorInformatiiSuplimentare>
+        <ClientNume>pm construct 2006</ClientNume>
+        <ClientInformatiiSuplimentare></ClientInformatiiSuplimentare>
+        <ClientCIF>1234555</ClientCIF>
+        <ClientNrRegCom></ClientNrRegCom>
+        <ClientJudet></ClientJudet>
+        <ClientAdresa></ClientAdresa>
+        <ClientBanca></ClientBanca>
+        <ClientIBAN></ClientIBAN>
+        <FacturaNumar>PMC0258</FacturaNumar>
+        <FacturaData>29.04.2023</FacturaData>
+        <FacturaScadenta></FacturaScadenta>
+        <FacturaTaxareInversa></FacturaTaxareInversa>
+        <FacturaTVAIncasare></FacturaTVAIncasare>
+        <FacturaInformatiiSuplimentare></FacturaInformatiiSuplimentare>
+        <FacturaMoneda>RON</FacturaMoneda>
+    </Antet>
+    <Detalii>
+        <Continut>
+            <Linie>
+    <LinieNrCrt>1</LinieNrCrt>
+    <Cont>371.01</Cont>
+    <Activitate></Activitate>
+    <Descriere>marfa</Descriere>
+    <CodArticolFurnizor></CodArticolFurnizor>
+    <CodArticolClient></CodArticolClient>
+    <InformatiiSuplimentare></InformatiiSuplimentare>
+    <UM>buc</UM>
+    <Cantitate>1</Cantitate>
+    <Pret>1170.65</Pret>
+    <Valoare>1170.65</Valoare>
+    <CotaTVA>19</CotaTVA>
+    <TVA>222.42</TVA>
+    <PretVanzare></PretVanzare>
+</Linie>
+
+        </Continut>
+    </Detalii>
+</Factura>
+<Factura>
+    <Antet>
+        <FurnizorNume>OVERTAZ SRL</FurnizorNume>
+        <FurnizorCIF>18225855</FurnizorCIF>
+        <FurnizorNrRegCom></FurnizorNrRegCom>
+        <FurnizorCapital></FurnizorCapital>
+        <FurnizorTara></FurnizorTara>
+        <FurnizorJudet></FurnizorJudet>
+        <FurnizorAdresa></FurnizorAdresa>
+        <FurnizorBanca></FurnizorBanca>
+        <FurnizorIBAN></FurnizorIBAN>
+        <FurnizorInformatiiSuplimentare></FurnizorInformatiiSuplimentare>
+        <ClientNume>pm construct 2006</ClientNume>
+        <ClientInformatiiSuplimentare></ClientInformatiiSuplimentare>
+        <ClientCIF>1234555</ClientCIF>
+        <ClientNrRegCom></ClientNrRegCom>
+        <ClientJudet></ClientJudet>
+        <ClientAdresa></ClientAdresa>
+        <ClientBanca></ClientBanca>
+        <ClientIBAN></ClientIBAN>
+        <FacturaNumar>PMC0257</FacturaNumar>
+        <FacturaData>28.04.2023</FacturaData>
+        <FacturaScadenta></FacturaScadenta>
+        <FacturaTaxareInversa></FacturaTaxareInversa>
+        <FacturaTVAIncasare></FacturaTVAIncasare>
+        <FacturaInformatiiSuplimentare></FacturaInformatiiSuplimentare>
+        <FacturaMoneda>RON</FacturaMoneda>
+    </Antet>
+    <Detalii>
+        <Continut>
+            <Linie>
+    <LinieNrCrt>1</LinieNrCrt>
+    <Cont>371.01</Cont>
+    <Activitate></Activitate>
+    <Descriere>marfa</Descriere>
+    <CodArticolFurnizor></CodArticolFurnizor>
+    <CodArticolClient></CodArticolClient>
+    <InformatiiSuplimentare></InformatiiSuplimentare>
+    <UM>buc</UM>
+    <Cantitate>1</Cantitate>
+    <Pret>2567.52</Pret>
+    <Valoare>2567.52</Valoare>
+    <CotaTVA>19</CotaTVA>
+    <TVA>487.83</TVA>
+    <PretVanzare></PretVanzare>
+</Linie>
+
+        </Continut>
+    </Detalii>
+</Factura>
+<Factura>
+    <Antet>
+        <FurnizorNume>DEDEMAN SRL</FurnizorNume>
+        <FurnizorCIF>2816464</FurnizorCIF>
+        <FurnizorNrRegCom></FurnizorNrRegCom>
+        <FurnizorCapital></FurnizorCapital>
+        <FurnizorTara></FurnizorTara>
+        <FurnizorJudet></FurnizorJudet>
+        <FurnizorAdresa></FurnizorAdresa>
+        <FurnizorBanca></FurnizorBanca>
+        <FurnizorIBAN></FurnizorIBAN>
+        <FurnizorInformatiiSuplimentare></FurnizorInformatiiSuplimentare>
+        <ClientNume>pm construct 2006</ClientNume>
+        <ClientInformatiiSuplimentare></ClientInformatiiSuplimentare>
+        <ClientCIF>1234555</ClientCIF>
+        <ClientNrRegCom></ClientNrRegCom>
+        <ClientJudet></ClientJudet>
+        <ClientAdresa></ClientAdresa>
+        <ClientBanca></ClientBanca>
+        <ClientIBAN></ClientIBAN>
+        <FacturaNumar>PMC0256</FacturaNumar>
+        <FacturaData>28.04.2023</FacturaData>
+        <FacturaScadenta></FacturaScadenta>
+        <FacturaTaxareInversa></FacturaTaxareInversa>
+        <FacturaTVAIncasare></FacturaTVAIncasare>
+        <FacturaInformatiiSuplimentare></FacturaInformatiiSuplimentare>
+        <FacturaMoneda>RON</FacturaMoneda>
+    </Antet>
+    <Detalii>
+        <Continut>
+            <Linie>
+    <LinieNrCrt>1</LinieNrCrt>
+    <Cont>371.01</Cont>
+    <Activitate></Activitate>
+    <Descriere>marfa</Descriere>
+    <CodArticolFurnizor></CodArticolFurnizor>
+    <CodArticolClient></CodArticolClient>
+    <InformatiiSuplimentare></InformatiiSuplimentare>
+    <UM>buc</UM>
+    <Cantitate>1</Cantitate>
+    <Pret>1023.7</Pret>
+    <Valoare>1023.7</Valoare>
+    <CotaTVA>19</CotaTVA>
+    <TVA>194.5</TVA>
+    <PretVanzare></PretVanzare>
+</Linie>
+
+        </Continut>
+    </Detalii>
+</Factura>
+<Factura>
+    <Antet>
+        <FurnizorNume>CONSOLIGHT COM SRL</FurnizorNume>
+        <FurnizorCIF>8984971</FurnizorCIF>
+        <FurnizorNrRegCom></FurnizorNrRegCom>
+        <FurnizorCapital></FurnizorCapital>
+        <FurnizorTara></FurnizorTara>
+        <FurnizorJudet></FurnizorJudet>
+        <FurnizorAdresa></FurnizorAdresa>
+        <FurnizorBanca></FurnizorBanca>
+        <FurnizorIBAN></FurnizorIBAN>
+        <FurnizorInformatiiSuplimentare></FurnizorInformatiiSuplimentare>
+        <ClientNume>pm construct 2006</ClientNume>
+        <ClientInformatiiSuplimentare></ClientInformatiiSuplimentare>
+        <ClientCIF>1234555</ClientCIF>
+        <ClientNrRegCom></ClientNrRegCom>
+        <ClientJudet></ClientJudet>
+        <ClientAdresa></ClientAdresa>
+        <ClientBanca></ClientBanca>
+        <ClientIBAN></ClientIBAN>
+        <FacturaNumar>PMC0242</FacturaNumar>
+        <FacturaData>28.04.2023</FacturaData>
+        <FacturaScadenta></FacturaScadenta>
+        <FacturaTaxareInversa></FacturaTaxareInversa>
+        <FacturaTVAIncasare></FacturaTVAIncasare>
+        <FacturaInformatiiSuplimentare></FacturaInformatiiSuplimentare>
+        <FacturaMoneda>RON</FacturaMoneda>
+    </Antet>
+    <Detalii>
+        <Continut>
+            <Linie>
+    <LinieNrCrt>1</LinieNrCrt>
+    <Cont>371.01</Cont>
+    <Activitate></Activitate>
+    <Descriere>marfa</Descriere>
+    <CodArticolFurnizor></CodArticolFurnizor>
+    <CodArticolClient></CodArticolClient>
+    <InformatiiSuplimentare></InformatiiSuplimentare>
+    <UM>buc</UM>
+    <Cantitate>1</Cantitate>
+    <Pret>6209.1</Pret>
+    <Valoare>6209.1</Valoare>
+    <CotaTVA>19</CotaTVA>
+    <TVA>1179.73</TVA>
+    <PretVanzare></PretVanzare>
+</Linie>
+
+        </Continut>
+    </Detalii>
+</Factura>
+<Factura>
+    <Antet>
+        <FurnizorNume>BETOANE SI PREFABRICATE GL 2004 SRL</FurnizorNume>
+        <FurnizorCIF>25672724</FurnizorCIF>
+        <FurnizorNrRegCom></FurnizorNrRegCom>
+        <FurnizorCapital></FurnizorCapital>
+        <FurnizorTara></FurnizorTara>
+        <FurnizorJudet></FurnizorJudet>
+        <FurnizorAdresa></FurnizorAdresa>
+        <FurnizorBanca></FurnizorBanca>
+        <FurnizorIBAN></FurnizorIBAN>
+        <FurnizorInformatiiSuplimentare></FurnizorInformatiiSuplimentare>
+        <ClientNume>pm construct 2006</ClientNume>
+        <ClientInformatiiSuplimentare></ClientInformatiiSuplimentare>
+        <ClientCIF>1234555</ClientCIF>
+        <ClientNrRegCom></ClientNrRegCom>
+        <ClientJudet></ClientJudet>
+        <ClientAdresa></ClientAdresa>
+        <ClientBanca></ClientBanca>
+        <ClientIBAN></ClientIBAN>
+        <FacturaNumar>PMC0241</FacturaNumar>
+        <FacturaData>28.04.2023</FacturaData>
+        <FacturaScadenta></FacturaScadenta>
+        <FacturaTaxareInversa></FacturaTaxareInversa>
+        <FacturaTVAIncasare></FacturaTVAIncasare>
+        <FacturaInformatiiSuplimentare></FacturaInformatiiSuplimentare>
+        <FacturaMoneda>RON</FacturaMoneda>
+    </Antet>
+    <Detalii>
+        <Continut>
+            <Linie>
+    <LinieNrCrt>1</LinieNrCrt>
+    <Cont>371.01</Cont>
+    <Activitate></Activitate>
+    <Descriere>marfa</Descriere>
+    <CodArticolFurnizor></CodArticolFurnizor>
+    <CodArticolClient></CodArticolClient>
+    <InformatiiSuplimentare></InformatiiSuplimentare>
+    <UM>buc</UM>
+    <Cantitate>1</Cantitate>
+    <Pret>3410</Pret>
+    <Valoare>3410</Valoare>
+    <CotaTVA>19</CotaTVA>
+    <TVA>647.9</TVA>
+    <PretVanzare></PretVanzare>
+</Linie>
+
+        </Continut>
+    </Detalii>
+</Factura>
+<Factura>
+    <Antet>
+        <FurnizorNume>DEPOZITU NR.2 SRL</FurnizorNume>
+        <FurnizorCIF>35695148</FurnizorCIF>
+        <FurnizorNrRegCom></FurnizorNrRegCom>
+        <FurnizorCapital></FurnizorCapital>
+        <FurnizorTara></FurnizorTara>
+        <FurnizorJudet></FurnizorJudet>
+        <FurnizorAdresa></FurnizorAdresa>
+        <FurnizorBanca></FurnizorBanca>
+        <FurnizorIBAN></FurnizorIBAN>
+        <FurnizorInformatiiSuplimentare></FurnizorInformatiiSuplimentare>
+        <ClientNume>pm construct 2006</ClientNume>
+        <ClientInformatiiSuplimentare></ClientInformatiiSuplimentare>
+        <ClientCIF>1234555</ClientCIF>
+        <ClientNrRegCom></ClientNrRegCom>
+        <ClientJudet></ClientJudet>
+        <ClientAdresa></ClientAdresa>
+        <ClientBanca></ClientBanca>
+        <ClientIBAN></ClientIBAN>
+        <FacturaNumar>PMC0255</FacturaNumar>
+        <FacturaData>27.04.2023</FacturaData>
+        <FacturaScadenta></FacturaScadenta>
+        <FacturaTaxareInversa></FacturaTaxareInversa>
+        <FacturaTVAIncasare></FacturaTVAIncasare>
+        <FacturaInformatiiSuplimentare></FacturaInformatiiSuplimentare>
+        <FacturaMoneda>RON</FacturaMoneda>
+    </Antet>
+    <Detalii>
+        <Continut>
+            <Linie>
+    <LinieNrCrt>1</LinieNrCrt>
+    <Cont>371.01</Cont>
+    <Activitate></Activitate>
+    <Descriere>marfa</Descriere>
+    <CodArticolFurnizor></CodArticolFurnizor>
+    <CodArticolClient></CodArticolClient>
+    <InformatiiSuplimentare></InformatiiSuplimentare>
+    <UM>buc</UM>
+    <Cantitate>1</Cantitate>
+    <Pret>5660.76</Pret>
+    <Valoare>5660.76</Valoare>
+    <CotaTVA>19</CotaTVA>
+    <TVA>1075.54</TVA>
+    <PretVanzare></PretVanzare>
+</Linie>
+
+        </Continut>
+    </Detalii>
+</Factura>
+<Factura>
+    <Antet>
+        <FurnizorNume>ALMON GROUP SRL</FurnizorNume>
+        <FurnizorCIF>33259479</FurnizorCIF>
+        <FurnizorNrRegCom></FurnizorNrRegCom>
+        <FurnizorCapital></FurnizorCapital>
+        <FurnizorTara></FurnizorTara>
+        <FurnizorJudet></FurnizorJudet>
+        <FurnizorAdresa></FurnizorAdresa>
+        <FurnizorBanca></FurnizorBanca>
+        <FurnizorIBAN></FurnizorIBAN>
+        <FurnizorInformatiiSuplimentare></FurnizorInformatiiSuplimentare>
+        <ClientNume>pm construct 2006</ClientNume>
+        <ClientInformatiiSuplimentare></ClientInformatiiSuplimentare>
+        <ClientCIF>1234555</ClientCIF>
+        <ClientNrRegCom></ClientNrRegCom>
+        <ClientJudet></ClientJudet>
+        <ClientAdresa></ClientAdresa>
+        <ClientBanca></ClientBanca>
+        <ClientIBAN></ClientIBAN>
+        <FacturaNumar>PMC0254</FacturaNumar>
+        <FacturaData>27.04.2023</FacturaData>
+        <FacturaScadenta></FacturaScadenta>
+        <FacturaTaxareInversa></FacturaTaxareInversa>
+        <FacturaTVAIncasare></FacturaTVAIncasare>
+        <FacturaInformatiiSuplimentare></FacturaInformatiiSuplimentare>
+        <FacturaMoneda>RON</FacturaMoneda>
+    </Antet>
+    <Detalii>
+        <Continut>
+            <Linie>
+    <LinieNrCrt>1</LinieNrCrt>
+    <Cont>371.01</Cont>
+    <Activitate></Activitate>
+    <Descriere>marfa</Descriere>
+    <CodArticolFurnizor></CodArticolFurnizor>
+    <CodArticolClient></CodArticolClient>
+    <InformatiiSuplimentare></InformatiiSuplimentare>
+    <UM>buc</UM>
+    <Cantitate>1</Cantitate>
+    <Pret>4409.85</Pret>
+    <Valoare>4409.85</Valoare>
+    <CotaTVA>19</CotaTVA>
+    <TVA>837.87</TVA>
+    <PretVanzare></PretVanzare>
+</Linie>
+
+        </Continut>
+    </Detalii>
+</Factura>
+<Factura>
+    <Antet>
+        <FurnizorNume>MASIV PARTENER GRUP SRL</FurnizorNume>
+        <FurnizorCIF>16492708</FurnizorCIF>
+        <FurnizorNrRegCom></FurnizorNrRegCom>
+        <FurnizorCapital></FurnizorCapital>
+        <FurnizorTara></FurnizorTara>
+        <FurnizorJudet></FurnizorJudet>
+        <FurnizorAdresa></FurnizorAdresa>
+        <FurnizorBanca></FurnizorBanca>
+        <FurnizorIBAN></FurnizorIBAN>
+        <FurnizorInformatiiSuplimentare></FurnizorInformatiiSuplimentare>
+        <ClientNume>pm construct 2006</ClientNume>
+        <ClientInformatiiSuplimentare></ClientInformatiiSuplimentare>
+        <ClientCIF>1234555</ClientCIF>
+        <ClientNrRegCom></ClientNrRegCom>
+        <ClientJudet></ClientJudet>
+        <ClientAdresa></ClientAdresa>
+        <ClientBanca></ClientBanca>
+        <ClientIBAN></ClientIBAN>
+        <FacturaNumar>PMC0240</FacturaNumar>
+        <FacturaData>27.04.2023</FacturaData>
+        <FacturaScadenta></FacturaScadenta>
+        <FacturaTaxareInversa></FacturaTaxareInversa>
+        <FacturaTVAIncasare></FacturaTVAIncasare>
+        <FacturaInformatiiSuplimentare></FacturaInformatiiSuplimentare>
+        <FacturaMoneda>RON</FacturaMoneda>
+    </Antet>
+    <Detalii>
+        <Continut>
+            <Linie>
+    <LinieNrCrt>1</LinieNrCrt>
+    <Cont>371.01</Cont>
+    <Activitate></Activitate>
+    <Descriere>marfa</Descriere>
+    <CodArticolFurnizor></CodArticolFurnizor>
+    <CodArticolClient></CodArticolClient>
+    <InformatiiSuplimentare></InformatiiSuplimentare>
+    <UM>buc</UM>
+    <Cantitate>1</Cantitate>
+    <Pret>8879</Pret>
+    <Valoare>8879</Valoare>
+    <CotaTVA>19</CotaTVA>
+    <TVA>1687.01</TVA>
+    <PretVanzare></PretVanzare>
+</Linie>
+
+        </Continut>
+    </Detalii>
+</Factura>
+<Factura>
+    <Antet>
+        <FurnizorNume>BETOANE SI PREFABRICATE GL 2004 SRL</FurnizorNume>
+        <FurnizorCIF>25672724</FurnizorCIF>
+        <FurnizorNrRegCom></FurnizorNrRegCom>
+        <FurnizorCapital></FurnizorCapital>
+        <FurnizorTara></FurnizorTara>
+        <FurnizorJudet></FurnizorJudet>
+        <FurnizorAdresa></FurnizorAdresa>
+        <FurnizorBanca></FurnizorBanca>
+        <FurnizorIBAN></FurnizorIBAN>
+        <FurnizorInformatiiSuplimentare></FurnizorInformatiiSuplimentare>
+        <ClientNume>pm construct 2006</ClientNume>
+        <ClientInformatiiSuplimentare></ClientInformatiiSuplimentare>
+        <ClientCIF>1234555</ClientCIF>
+        <ClientNrRegCom></ClientNrRegCom>
+        <ClientJudet></ClientJudet>
+        <ClientAdresa></ClientAdresa>
+        <ClientBanca></ClientBanca>
+        <ClientIBAN></ClientIBAN>
+        <FacturaNumar>PMC0239</FacturaNumar>
+        <FacturaData>27.04.2023</FacturaData>
+        <FacturaScadenta></FacturaScadenta>
+        <FacturaTaxareInversa></FacturaTaxareInversa>
+        <FacturaTVAIncasare></FacturaTVAIncasare>
+        <FacturaInformatiiSuplimentare></FacturaInformatiiSuplimentare>
+        <FacturaMoneda>RON</FacturaMoneda>
+    </Antet>
+    <Detalii>
+        <Continut>
+            <Linie>
+    <LinieNrCrt>1</LinieNrCrt>
+    <Cont>371.01</Cont>
+    <Activitate></Activitate>
+    <Descriere>marfa</Descriere>
+    <CodArticolFurnizor></CodArticolFurnizor>
+    <CodArticolClient></CodArticolClient>
+    <InformatiiSuplimentare></InformatiiSuplimentare>
+    <UM>buc</UM>
+    <Cantitate>1</Cantitate>
+    <Pret>3680</Pret>
+    <Valoare>3680</Valoare>
+    <CotaTVA>19</CotaTVA>
+    <TVA>699.2</TVA>
+    <PretVanzare></PretVanzare>
+</Linie>
+
+        </Continut>
+    </Detalii>
+</Factura>
+<Factura>
+    <Antet>
+        <FurnizorNume>ROMSTAL IMEX SRL</FurnizorNume>
+        <FurnizorCIF>5990324</FurnizorCIF>
+        <FurnizorNrRegCom></FurnizorNrRegCom>
+        <FurnizorCapital></FurnizorCapital>
+        <FurnizorTara></FurnizorTara>
+        <FurnizorJudet></FurnizorJudet>
+        <FurnizorAdresa></FurnizorAdresa>
+        <FurnizorBanca></FurnizorBanca>
+        <FurnizorIBAN></FurnizorIBAN>
+        <FurnizorInformatiiSuplimentare></FurnizorInformatiiSuplimentare>
+        <ClientNume>pm construct 2006</ClientNume>
+        <ClientInformatiiSuplimentare></ClientInformatiiSuplimentare>
+        <ClientCIF>1234555</ClientCIF>
+        <ClientNrRegCom></ClientNrRegCom>
+        <ClientJudet></ClientJudet>
+        <ClientAdresa></ClientAdresa>
+        <ClientBanca></ClientBanca>
+        <ClientIBAN></ClientIBAN>
+        <FacturaNumar>PMC0238</FacturaNumar>
+        <FacturaData>27.04.2023</FacturaData>
+        <FacturaScadenta></FacturaScadenta>
+        <FacturaTaxareInversa></FacturaTaxareInversa>
+        <FacturaTVAIncasare></FacturaTVAIncasare>
+        <FacturaInformatiiSuplimentare></FacturaInformatiiSuplimentare>
+        <FacturaMoneda>RON</FacturaMoneda>
+    </Antet>
+    <Detalii>
+        <Continut>
+            <Linie>
+    <LinieNrCrt>1</LinieNrCrt>
+    <Cont>371.01</Cont>
+    <Activitate></Activitate>
+    <Descriere>marfa</Descriere>
+    <CodArticolFurnizor></CodArticolFurnizor>
+    <CodArticolClient></CodArticolClient>
+    <InformatiiSuplimentare></InformatiiSuplimentare>
+    <UM>buc</UM>
+    <Cantitate>1</Cantitate>
+    <Pret>2625.73</Pret>
+    <Valoare>2625.73</Valoare>
+    <CotaTVA>19</CotaTVA>
+    <TVA>498.89</TVA>
+    <PretVanzare></PretVanzare>
+</Linie>
+
+        </Continut>
+    </Detalii>
+</Factura>
+
+</Facturi>
