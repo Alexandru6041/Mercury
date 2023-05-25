@@ -25,11 +25,11 @@
     </section>
     
     <center>
-        <b>Preview</b>
-        <table id="preview">
+        <h3 class="heading-section">Preview</h3>
+        <table class="table table-bordered" id="preview">
             <thead>
                 <tr id="cols_italic" style="font-style: italic; color:gray">
-                    <th></th>
+                    <th scope="col">#</th>
                 </tr>
             </thead>
             <tbody id="body">
@@ -41,10 +41,17 @@
     </center>
     
 </body>
-
+<style>
+    td{
+        color:white;
+    }
+    th{
+        color:white;
+    }
+</style>
 <script>
     function draw_header(header){
-        r = '<th>' + header + '</th>\n'
+        r = '<th scope="col">' + header + '</th>\n'
         
         document.getElementById('header_row').innerHTML += r
     }
@@ -60,12 +67,13 @@
     function draw_map(map){
         r = ''
         map['cols'].forEach((col) => {
-            r += '<th>' + col + '</th>'
+            r += '<th scope="col">' + col + '</th>'
         })
         
         document.getElementById('cols_italic').innerHTML += r
     }
     xl = JSON.parse("{{json_file}}".replace(/&quot;/g, '"'))
+    console.log(xl)
     draw_map(xl['map'])
     
     xl['headers'].forEach(draw_header)
