@@ -1,43 +1,76 @@
 from __future__ import print_function
-import sib_api_v3_sdk
 from random import randint
 from jinja2 import Template
+from django.shortcuts import render
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from Mercury.settings import EMAIL_ACCOUNT, EMAIL_ACCOUNT_PASSWORD, EMAIL_HOST, EMAIL_HOST_PORT
 
 class gService(object):
     
-    def __read_html_file(path):
+    def __init__(self):
+        '''
+        Initializeaza conexiunea cu serverul SMTP
+        '''
+        self.messages = []
+        self.smtp = smtplib.SMTP(host=EMAIL_HOST, port=EMAIL_HOST_PORT)
+
+        self.smtp.ehlo()
+        self.smtp.starttls()
+        self.smtp.login(EMAIL_ACCOUNT, EMAIL_ACCOUNT_PASSWORD)
+
+    @staticmethod
+    def read_html_file(path):
         with open(path, "r") as file:
             content = Template(file.read())
         
         return content
     
-    def send_mail(name_from, email_from, email_to, name_to, Subject, path_to_html, pin, request):
-        configuration = sib_api_v3_sdk.Configuration()
-        configuration.api_key['api-key'] = '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'
+    def close_smtp(self):
+        '''
+        Inchide conexiunea cu serverul SMTP
+        '''
+        self.smtp.close()
 
-        api_instance = sib_api_v3_sdk.TransactionalEmailsApi(
-            sib_api_v3_sdk.ApiClient(configuration))
-        subject = Subject
-        sender = {"name": "{}".format(
-            name_from), "email": "{}".format(email_from)}
-        
-        html_content = gService.__read_html_file(path_to_html).render(name_from = name_from, name_to = name_to, pin = pin)
-        
-        to = [{"email": "{}".format(email_to), "name": "{}".format(name_to)}]
+    @staticmethod
+    def create_message(to: str, _from: str, subject: str, body) -> MIMEMultipart:
+        '''
+        Instantiaza un mesaj de tip MIMEMultipart.
+        body: MIME
+        '''
+        message = MIMEMultipart()
+        message['from'] = _from
+        message['to'] = to
+        message['subject'] = subject
 
-        # params = {"parameter": "My param value", "subject": "New Subject"}
+        message.attach(body)
 
-        send_smtp_email = sib_api_v3_sdk.SendSmtpEmail(
-            to=to, html_content=html_content, sender=sender, subject=subject)
+        return message
 
-        # try:
-        #     api_response = api_instance.send_transac_email(send_smtp_email)
-        #     return api_response
-        # except ApiException as e:
-        #     return render(request, "502.html", status = 502)
-        api_response = api_instance.send_transac_email(send_smtp_email)
-        print(api_response)
-            
+    def add_message(self, message: MIMEMultipart):
+        self.messages.append(message)
+
+    def send(self):
+        try:
+            for x, message in enumerate(self.messages):
+                self.smtp.send_message(message)
+
+            self.messages.clear()
+
+        except:
+            pass
+    
+    @staticmethod
+    def send_message(to, _from, subject, name_from, name_to, pin, path_to_html, request):
+        try:
+            email_service = gService()
+            context = MIMEText(gService.read_html_file(path_to_html).render(name_from = name_from, name_to = name_to, pin = pin), _subtype="html")
+            email_service.add_message(gService.create_message(to, _from, subject, context))
+            email_service.send()
+            email_service.close_smtp()
+        except:
+            return render(request, "502.html", status = 502)
     
     def generate_pin():
         sol = 0
@@ -50,5 +83,4 @@ class gService(object):
             sol = sol * 10 + digit
             
         numbers.clear()
-        return sol    
-        
+        return sol

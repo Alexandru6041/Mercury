@@ -12,7 +12,9 @@ from django.contrib.auth.models import User
 
 # Utilities
 from utils.communication_utils.main_c import gService
-from utils.costum_backend.main import MyBackend, AESCipher, MyHasher
+from utils.costum_backend.main import MyBackend, AESCipher
+from Mercury.settings import EMAIL_ACCOUNT, EMAIL_NAME, DEFAULT_EMAIL_PATH
+
 
 @login_required(login_url="/sign-in/", redirect_field_name="")
 def index(request):
@@ -102,11 +104,9 @@ def forgot_password(request):
             try:
                 user = User.objects.get(username = username)
                 user_email = user.email
-                try:
-                    gService.send_mail("Mercury", "requests.mercury@gmail.com", user_email, username, "Resetare Parola", "main/templates/email_template.html", pin, request=request)
                 
-                except ApiException:
-                    return render(request, "502.html", status = 502)
+                gService.send_message(user_email, EMAIL_ACCOUNT, "Echipa Mercury: Resetare Parola", EMAIL_NAME, username, pin, DEFAULT_EMAIL_PATH, request)
+                
                 return redirect("/change_password?code={}&username={}".format(enc_pin, enc_username))
             
             except User.DoesNotExist:
@@ -119,11 +119,8 @@ def forgot_password(request):
             
                 username = user.username
                 if(error == None):
-                    try:
-                        gService.send_mail("Mercury", "requests.mercury@gmail.com", user_email,
-                                    username, "Resetare Parola", "main/templates/email_template.html", pin, request=request)
-                    except ApiException:
-                        return render(request, "502.html", status = 502)
+
+                    gService.send_message(user_email, EMAIL_ACCOUNT, "Echipa Mercury: Resetare Parola", EMAIL_NAME, username, pin, DEFAULT_EMAIL_PATH, request)
 
                     return redirect("/change_password?code={}&username={}".format(enc_pin, enc_username))
             
@@ -292,7 +289,9 @@ def process_code(request):
         username = user.username
         pin = gService.generate_pin()
         pin = str(pin)
-        gService.send_mail("Mercury", "requests.mercury@gmail.com", user_email, username, "Verificare Identitate", 'main/templates/email_template.html', pin, request)
+        
+        gService.send_message(user_email, EMAIL_ACCOUNT, "Echipa Mercury: Resetare Parola", EMAIL_NAME, username, pin, DEFAULT_EMAIL_PATH, request)
+
         enc_code = AESCipher.encrypt(pin)
         return redirect("/check_user?code={}".format(enc_code))
     except ApiException:
