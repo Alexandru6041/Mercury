@@ -8,11 +8,12 @@ from django.core.validators import validate_email
 from sib_api_v3_sdk.rest import ApiException
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
-# from django.contrib.auth.backends import
 
 # Utilities
 from utils.communication_utils.main_c import gService
-from utils.costum_backend.main import MyBackend, AESCipher, MyHasher
+from utils.costum_backend.main import MyBackend, AESCipher
+from Mercury.settings import EMAIL_ACCOUNT, EMAIL_NAME, DEFAULT_EMAIL_PATH
+
 
 @login_required(login_url="/sign-in/", redirect_field_name="")
 def index(request):
@@ -102,11 +103,9 @@ def forgot_password(request):
             try:
                 user = User.objects.get(username = username)
                 user_email = user.email
-                try:
-                    gService.send_mail("Mercury", "requests.mercury@gmail.com", user_email, username, "Resetare Parola", "main/templates/email_template.html", pin, request=request)
                 
-                except ApiException:
-                    return render(request, "502.html", status = 502)
+                gService.send_message(user_email, EMAIL_ACCOUNT, "Echipa Mercury: Resetare Parola", EMAIL_NAME, username, pin, DEFAULT_EMAIL_PATH, request)
+                
                 return redirect("/change_password?code={}&username={}".format(enc_pin, enc_username))
             
             except User.DoesNotExist:
@@ -119,11 +118,8 @@ def forgot_password(request):
             
                 username = user.username
                 if(error == None):
-                    try:
-                        gService.send_mail("Mercury", "requests.mercury@gmail.com", user_email,
-                                    username, "Resetare Parola", "main/templates/email_template.html", pin, request=request)
-                    except ApiException:
-                        return render(request, "502.html", status = 502)
+
+                    gService.send_message(user_email, EMAIL_ACCOUNT, "Echipa Mercury: Resetare Parola", EMAIL_NAME, username, pin, DEFAULT_EMAIL_PATH, request)
 
                     return redirect("/change_password?code={}&username={}".format(enc_pin, enc_username))
             
@@ -219,6 +215,7 @@ def account_manage(request):
     user = request.user
     user_email = user.email
     display_name = user.username
+    new_password_copy = ''
     ok = None
     error = ''
     
@@ -249,11 +246,17 @@ def account_manage(request):
                 user.email = new_email
             
             if(new_password != ''):
+                new_password_copy = new_password
                 new_password = make_password(password=new_password, salt=None, hasher='myhasher')
                 user.password = new_password
             
             user.save()
+            if(new_password != ''):
+                user = MyBackend.authenticate(request, username = user.username, password = new_password_copy)
+                login(request, user)
+            
             ok = "Datele au fost actualizate cu succes"
+            
     
     return render(request, "manage_account.html", {'error' : error, 'ok' : ok, 'user_email' : user.email, 'display_name' : user.username})
 
@@ -292,7 +295,9 @@ def process_code(request):
         username = user.username
         pin = gService.generate_pin()
         pin = str(pin)
-        gService.send_mail("Mercury", "requests.mercury@gmail.com", user_email, username, "Verificare Identitate", 'main/templates/email_template.html', pin, request)
+        
+        gService.send_message(user_email, EMAIL_ACCOUNT, "Echipa Mercury: Verificare Identitate", EMAIL_NAME, username, pin, DEFAULT_EMAIL_PATH, request)
+
         enc_code = AESCipher.encrypt(pin)
         return redirect("/check_user?code={}".format(enc_code))
     except ApiException:
@@ -305,10 +310,10 @@ def delete_user(request):
         return redirect("/sign-in/")
 
 def about_us(request):
-    pass
+    return render(request, "aboutus.html")
 
 def pricing(request):
-    pass
+    return render(request, "pricing.html")
 
 
 # Costum Http Errors Handler

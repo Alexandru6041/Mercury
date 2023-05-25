@@ -141,7 +141,10 @@ STATICFILES_DIRS = [join(BASE_DIR, 'main/static')]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-EMAIL_ACCOUNT_PASSWORD = 'bnffjdnsktzuvyaq'
-EMAIL_ACCOUNT = 'cacenschivlad@gmail.com'
+# Request Email Credentials
+EMAIL_NAME = "Mercury"
+EMAIL_ACCOUNT_PASSWORD = 'lmnakgqbxwvmkryb'
+EMAIL_ACCOUNT = 'requests.mercury@gmail.com'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_PORT = 587
+DEFAULT_EMAIL_PATH = "main/templates/email_template.html"
