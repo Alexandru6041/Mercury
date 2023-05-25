@@ -18,7 +18,8 @@ urlpatterns = [
     path("about_us/", views.about_us, name = "despre_noi"),
     path("pricing/", views.pricing, name = "oferte"),
     path("check_user", views.check_user, name = "checkUser"),
-    path("process_code/", views.process_code, name = "processcode")
+    path("process_code/", views.process_code, name = "processcode"),
+    path("delete_user/", views.delete_user, name = "deleteuser")
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)

@@ -297,7 +297,13 @@ def process_code(request):
         return redirect("/check_user?code={}".format(enc_code))
     except ApiException:
         return render(request, "502.html", status=502)
-    
+
+def delete_user(request):
+    if request.method == "POST":
+        user = request.user
+        user.delete()
+        return redirect("/sign-in/")
+
 def about_us(request):
     pass
 

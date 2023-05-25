@@ -52,7 +52,14 @@
                             </div>
                             
                         </form>
+                        
+                        <form method = "POST" action="{% url 'deleteuser' %}" class="signin-form">
+                            {% csrf_token %}
 
+                            <button type="submit" class="form-control btn btn-secondary bg-danger submit px-3">STERGE CONTUL</button>
+
+                        </form>
+                        <br>
                         <a class = "inregistrare" href="/"> <p class="w-100 text-center">&mdash; Inapoi Acasa &mdash;</p> </a>
 
                         {% if error %}
