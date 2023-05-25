@@ -215,6 +215,7 @@ def account_manage(request):
     user = request.user
     user_email = user.email
     display_name = user.username
+    new_password_copy = ''
     ok = None
     error = ''
     
@@ -250,10 +251,12 @@ def account_manage(request):
                 user.password = new_password
             
             user.save()
-            user = MyBackend.authenticate(request, username = user.username, password = new_password_copy)
-            login(request, user)
+            if(new_password != ''):
+                user = MyBackend.authenticate(request, username = user.username, password = new_password_copy)
+                login(request, user)
             
             ok = "Datele au fost actualizate cu succes"
+            
     
     return render(request, "manage_account.html", {'error' : error, 'ok' : ok, 'user_email' : user.email, 'display_name' : user.username})
 
