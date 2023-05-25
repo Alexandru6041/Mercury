@@ -8,7 +8,6 @@ from django.core.validators import validate_email
 from sib_api_v3_sdk.rest import ApiException
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
-# from django.contrib.auth.backends import
 
 # Utilities
 from utils.communication_utils.main_c import gService
@@ -246,10 +245,14 @@ def account_manage(request):
                 user.email = new_email
             
             if(new_password != ''):
+                new_password_copy = new_password
                 new_password = make_password(password=new_password, salt=None, hasher='myhasher')
                 user.password = new_password
             
             user.save()
+            user = MyBackend.authenticate(request, username = user.username, password = new_password_copy)
+            login(request, user)
+            
             ok = "Datele au fost actualizate cu succes"
     
     return render(request, "manage_account.html", {'error' : error, 'ok' : ok, 'user_email' : user.email, 'display_name' : user.username})
@@ -290,7 +293,7 @@ def process_code(request):
         pin = gService.generate_pin()
         pin = str(pin)
         
-        gService.send_message(user_email, EMAIL_ACCOUNT, "Echipa Mercury: Resetare Parola", EMAIL_NAME, username, pin, DEFAULT_EMAIL_PATH, request)
+        gService.send_message(user_email, EMAIL_ACCOUNT, "Echipa Mercury: Verificare Identitate", EMAIL_NAME, username, pin, DEFAULT_EMAIL_PATH, request)
 
         enc_code = AESCipher.encrypt(pin)
         return redirect("/check_user?code={}".format(enc_code))
@@ -304,10 +307,10 @@ def delete_user(request):
         return redirect("/sign-in/")
 
 def about_us(request):
-    pass
+    return render(request, "aboutus.html")
 
 def pricing(request):
-    pass
+    return render(request, "pricing.html")
 
 
 # Costum Http Errors Handler
