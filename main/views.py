@@ -214,6 +214,102 @@ def code_check(request):
     return render(request, "change_password.html", {'error' : error, 'code' : url_argument, 'username' : url_argument_username, 'form' : change_form})
 
 
+@login_required(login_url="/sign-in/", redirect_field_name="")
+def account_manage(request):
+    user = request.user
+    user_email = user.email
+    display_name = user.username
+    ok = None
+    error = ''
+    
+    if request.method == "POST":
+        new_username = request.POST["username"]
+        new_password = request.POST["password"]
+        new_email = request.POST["email"]
+        
+        if(new_username != ''):
+            if (User.objects.filter(username=new_username).exists() == True):
+                error = 'Acest nume de utilizator exista deja'
+        
+        if(error == '' and new_email != '' and User.objects.filter(email=new_email).exists() == True):
+            error = 'Aceasta adresa de email este deja in uz'
+        
+        if(error == '' and new_password != ''):
+            
+             error_dict = MyBackend.validate_password(new_password, user)    
+             if(len(error_dict) != 0):
+                for i in range(len(error_dict)):
+                    error += error_dict[i]
+        
+        if(error == ''):
+            if(new_username != ''):
+                user.username = new_username
+            
+            if(new_email != ''):
+                user.email = new_email
+            
+            if(new_password != ''):
+                new_password = make_password(password=new_password, salt=None, hasher='myhasher')
+                user.password = new_password
+            
+            user.save()
+            ok = "Datele au fost actualizate cu succes"
+    
+    return render(request, "manage_account.html", {'error' : error, 'ok' : ok, 'user_email' : user.email, 'display_name' : user.username})
+
+
+@login_required(login_url="/sign-in/", redirect_field_name="")
+def check_user(request):
+    error = None
+    url = request.build_absolute_uri()
+    
+    if("?code=" in url):
+        enc_code = request.GET["code"]
+        
+        if("=" in enc_code):
+            return render(request, "403.html", status = 403)
+    else:
+        return render(request, "403.html", status=403)
+        
+    dec_code = AESCipher.decrypt(enc_code)
+    
+    if request.method == 'POST':
+        code = request.POST["code"]
+        if(dec_code == code):
+            return redirect("/my_account/")
+        else:
+            error = "Codul introdus este incorect. Verifcati mailul"
+    
+    return render(request, "check_code.html", {'error' : error, 'pin' : enc_code})
+
+
+
+@login_required(login_url="/sign-in/", redirect_field_name="")
+def process_code(request):
+    try:
+        user = request.user
+        user_email = user.email
+        username = user.username
+        pin = gService.generate_pin()
+        pin = str(pin)
+        gService.send_mail("Mercury", "requests.mercury@gmail.com", user_email, username, "Verificare Identitate", 'main/templates/email_template.html', pin, request)
+        enc_code = AESCipher.encrypt(pin)
+        return redirect("/check_user?code={}".format(enc_code))
+    except ApiException:
+        return render(request, "502.html", status=502)
+
+def delete_user(request):
+    if request.method == "POST":
+        user = request.user
+        user.delete()
+        return redirect("/sign-in/")
+
+def about_us(request):
+    pass
+
+def pricing(request):
+    pass
+
 
 # Costum Http Errors Handler
 def handler404(request, exception):
