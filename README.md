@@ -34,28 +34,17 @@ Proiectul este structurat pe extensii(folder: converter, main) adaugate la aplic
 
 
 ## Ghid de instalare
-Pentru o instalare rapida cu **pipenv** urmariti pasii de mai jos:
-** *Python se presupune a fi instalat*
-* Pentru a instala *pipenv*:
-
-  Windows
-  ```bash
-  pip install pipenv
-  ```
-  Linux based
-  ```bash
-  pip3 install pipenv
-  ```
-1. Instalati environmentul deja definit in Pipfile.lock:
+1. Pentru a instala librariile aditionale folosite rulati comanda:
+    
+    Windows
     ```bash
-    pipenv sync
-    pipenv install -r requirements.txt
+    pip install -r requirements.txt
     ```
-2. Activati environmentul:
+    Linux based
     ```bash
-    pipenv shell
+    pip3 install -r requirements.txt
     ```
-3. Porniti un server local folosind comanda:
+2. Porniti un server local folosind comanda:
 
     Windows
     ```bash
