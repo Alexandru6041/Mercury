@@ -8411,3 +8411,7 @@ a.inregistrare:hover
     opacity: 1;
   }
 }
+.js-fullheight
+{
+  height: 100vh;
+}

@@ -10,7 +10,11 @@
 		});
 
 	};
-	fullHeight();
+	///fullHeight();
+	
+	$(document).ready(function() {
+  		fullHeight();
+	});
 
 	$(".toggle-password").click(function() {
 

@@ -43,6 +43,7 @@ def signin(request):
         username = request.POST["username"]
         password = request.POST["password"]
         user = MyBackend.authenticate(request, username = username, password = password)
+        
         if user:
             login(request, user)
             return redirect("/")
@@ -61,7 +62,6 @@ def signUp(request):
     if request.method == 'POST':
         creation_form = RegisterUser(request.POST)
         email_user = request.POST["email"]
-        username_user = request.POST["username"]
         
         if(User.objects.filter(email = email_user).exists() == True): 
             error_credentials = "Aceasta adresa de email este deja in uz"
@@ -115,12 +115,10 @@ def forgot_password(request):
             user_email = username
             try:
                 user = User.objects.get(email = user_email)
-            
                 username = user.username
+                
                 if(error == None):
-
                     gService.send_message(user_email, EMAIL_ACCOUNT, "Echipa Mercury: Resetare Parola", EMAIL_NAME, username, pin, DEFAULT_EMAIL_PATH, request)
-
                     return redirect("/change_password?code={}&username={}".format(enc_pin, enc_username))
             
             except User.DoesNotExist:
@@ -137,9 +135,9 @@ def code_check(request):
         return render(request, "403.html", status=403)
     else:
         url_argument_username = request.GET.get("username")
+        
         if("=" in url_argument_username):
             return render(request, "403.html", status=403)
-        
         
         try:
             dec_username  = AESCipher.decrypt(ciphertext = url_argument_username)
@@ -147,11 +145,11 @@ def code_check(request):
             return render(request, "403.html", status=403)
 
     if("?code=" in url):
-
         url_argument = request.GET.get("code")
         
         if("=" in url_argument):
             return render(request, "403.html", status=403)
+        
         try:
             dec_code = AESCipher.decrypt(ciphertext= url_argument)
         except:
@@ -159,12 +157,12 @@ def code_check(request):
         
     else:
         return render(request, "403.html", status = 403)
+    
     try:
         user = User.objects.get(username = dec_username)
     except User.DoesNotExist:
         try:
-            user = User.objects.get(email = dec_username)
-        
+            user = User.objects.get(email = dec_username)    
         except User.DoesNotExist:
             return render(request, "403.html", status=403)
 
@@ -176,7 +174,6 @@ def code_check(request):
         user_code = request.POST["pin"]
         new_password = request.POST["new_password"]
         new_password_confirm = request.POST["new_password_confirm"]
-        
         
         if(user_code == dec_code):
             if(new_password != new_password_confirm):
@@ -190,7 +187,7 @@ def code_check(request):
             if(error == '' and len(error_dict) != 0):
                 for i in range(len(error_dict)):
                     error += error_dict[i]
-            
+        
         else:
             error = 'Codul introdus nu este corect. Verificati emailul'
         
@@ -201,6 +198,7 @@ def code_check(request):
                 new_password = make_password(password = new_password, salt = None, hasher='myhasher')
                 user.password = new_password
                 user.save()
+        
                 return redirect("/sign-in/")
             except User.DoesNotExist:
                 return render(request, "403.html", status=403)
@@ -213,8 +211,6 @@ def code_check(request):
 @login_required(login_url="/sign-in/", redirect_field_name="")
 def account_manage(request):
     user = request.user
-    user_email = user.email
-    display_name = user.username
     new_password_copy = ''
     ok = None
     error = ''
@@ -255,8 +251,7 @@ def account_manage(request):
                 user = MyBackend.authenticate(request, username = user.username, password = new_password_copy)
                 login(request, user)
             
-            ok = "Datele au fost actualizate cu succes"
-            
+            ok = "Datele au fost actualizate cu succes"        
     
     return render(request, "manage_account.html", {'error' : error, 'ok' : ok, 'user_email' : user.email, 'display_name' : user.username})
 

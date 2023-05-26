@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block body %}
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    {% comment %} <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"> {% endcomment %}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     
     <body class="img js-fullheight">
@@ -26,12 +26,6 @@
                         <a href="/" class="nav-item nav-link active myhref">Acasa</a>
                         <a href= {% url 'oferte' %} class="nav-item nav-link active myhref">Pricing</a>
                         <a href= {% url 'despre_noi' %} class="nav-item nav-link active myhref">Despre Noi</a>
-                
-                    </div>
-            
-                    <div class="navbar-nav ms-auto">
-                
-                        <a href= {% url 'processcode' %} class="nav-item nav-link active myhref">Contul Meu</a>
                 
                     </div>
             
