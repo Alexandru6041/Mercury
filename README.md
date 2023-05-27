@@ -55,5 +55,4 @@ Proiectul este structurat pe extensii(folder: converter, main) adaugate la aplic
     python3 manage.py runserver
     ```
     * Puteti specifica adresa IP la care sa se deschida serverul dupa comanda *runserver*.
-## FAQ
 
